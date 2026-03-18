@@ -264,6 +264,8 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
   <div class="card" id="rep-person"></div>
   <div class="section-label">todos os lançamentos</div>
   <div class="card" id="rep-all"></div>
+  <button class="btn-submit" onclick="exportCSV()" style="margin-top:4px;">Exportar extrato CSV</button>
+  <div style="height:20px;"></div>
 </div>
 
 </main>
@@ -594,6 +596,27 @@ function renderReport(){
     return '<div class="exp-item"><div class="exp-left"><span class="exp-name">'+e.desc+'</span><span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+' · '+c.name+'</span></div><span class="exp-val'+(e.val<0?' negative':'')+'">'+fmt(e.val)+'</span></div>';
   }).join('');
   document.getElementById('rep-all').innerHTML=allHtml||'<div class="empty">Sem lançamentos em '+MONTHS[currentMonth]+'</div>';
+}
+
+function exportCSV(){
+  var exps=filteredExpenses().slice().sort(function(a,b){ return a.date.localeCompare(b.date); });
+  if(exps.length===0){ showToast('Nenhum lançamento neste mês'); return; }
+  var lines=['\uFEFFData;Descrição;Quem;Categoria;Valor (R$)'];
+  exps.forEach(function(e){
+    var c=catById(e.cat);
+    var val=parseFloat(e.val).toFixed(2).replace('.',',');
+    lines.push([e.date, e.desc, e.who, c.name, val].join(';'));
+  });
+  var total=exps.reduce(function(s,e){ return s+e.val; },0);
+  lines.push(';;;Total;'+total.toFixed(2).replace('.',','));
+  var blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  a.download='extrato-'+MONTHS[currentMonth]+'-'+currentYear+'.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Extrato exportado!');
 }
 
 document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
