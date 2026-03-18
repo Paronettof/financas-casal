@@ -171,6 +171,16 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
       <button class="who-btn active" id="who-filipe" onclick="setWho('Filipe')">🧔 Filipe</button>
       <button class="who-btn" id="who-beatriz" onclick="setWho('Beatriz')">👩 Beatriz</button>
     </div>
+
+    <input type="file" id="ocr-input" accept="image/*" capture="environment" style="display:none;" onchange="handleOCR(this)">
+    <button class="btn-outline" style="margin-bottom:16px;margin-top:0;" onclick="document.getElementById('ocr-input').click()">
+      📷 Ler nota fiscal
+    </button>
+    <div id="ocr-preview" style="display:none;margin-bottom:14px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border2);">
+      <img id="ocr-img" style="width:100%;max-height:200px;object-fit:cover;">
+      <div id="ocr-status" style="padding:10px 14px;font-size:13px;color:var(--text2);background:var(--surface2);">Lendo nota...</div>
+    </div>
+
     <div class="form-group">
       <label class="form-label">Descrição</label>
       <input class="form-control" id="inp-desc" placeholder="Ex: Mercado, Farmácia...">
@@ -251,19 +261,7 @@ var currentYear = new Date().getFullYear();
 var currentMonth = new Date().getMonth();
 var MONTHS = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 
-var categories = [
-  {id:'alim-merc', name:'Mercados & Padarias',     color:'#1D9E75', limit:1500},
-  {id:'alim-fora', name:'Comida fora de casa',      color:'#0F6E56', limit:500},
-  {id:'saude',     name:'Saúde & Farmácia',         color:'#D85A30', limit:800},
-  {id:'transp',    name:'Transporte & Combustível', color:'#2563eb', limit:800},
-  {id:'educ',      name:'Educação & Escola',        color:'#7F77DD', limit:1600},
-  {id:'bebe',      name:'Bebê & Filhos',            color:'#D4537E', limit:900},
-  {id:'contas',    name:'Contas & Serviços',        color:'#888780', limit:1100},
-  {id:'pgto',      name:'Pagamentos & Crédito',     color:'#c97c1a', limit:400},
-  {id:'pessoal',   name:'Pessoal & Serviços',       color:'#639922', limit:900},
-  {id:'familia',   name:'Família',                  color:'#c53030', limit:200},
-  {id:'outros',    name:'Outros',                   color:'#5DCAA5', limit:300}
-];
+var categories = [];
 
 var expenses = [];
 
@@ -517,6 +515,64 @@ function exportCSV(){
   a.href=url; a.download='extrato-'+MONTHS[currentMonth]+'-'+currentYear+'.csv'; a.click();
   URL.revokeObjectURL(url);
   showToast('Extrato exportado!');
+}
+
+async function handleOCR(input) {
+  var file = input.files[0];
+  if (!file) return;
+
+  var preview = document.getElementById('ocr-preview');
+  var img = document.getElementById('ocr-img');
+  var status = document.getElementById('ocr-status');
+  preview.style.display = 'block';
+  status.textContent = 'Lendo nota...';
+
+  var reader = new FileReader();
+  reader.onload = async function(e) {
+    img.src = e.target.result;
+    var base64 = e.target.result.split(',')[1];
+    var mediaType = file.type || 'image/jpeg';
+
+    try {
+      var response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 500,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'image',
+                source: { type: 'base64', media_type: mediaType, data: base64 }
+              },
+              {
+                type: 'text',
+                text: 'Analise esse cupom fiscal ou nota e extraia: 1) o valor TOTAL pago (número apenas, ex: 47.50), 2) o nome do estabelecimento ou tipo de compra (ex: Mercado Extra, Farmácia), 3) a data no formato YYYY-MM-DD. Responda APENAS em JSON assim: {"valor": 47.50, "descricao": "Mercado Extra", "data": "2026-03-18"}. Se não conseguir identificar algum campo, use null.'
+              }
+            ]
+          }]
+        })
+      });
+
+      var data = await response.json();
+      var text = data.content && data.content[0] ? data.content[0].text : '';
+      var clean = text.replace(/```json|```/g, '').trim();
+      var parsed = JSON.parse(clean);
+
+      if (parsed.valor) document.getElementById('inp-val').value = parsed.valor;
+      if (parsed.descricao) document.getElementById('inp-desc').value = parsed.descricao;
+      if (parsed.data) document.getElementById('inp-date').value = parsed.data;
+
+      status.textContent = 'Nota lida! Confira os campos abaixo.';
+      status.style.color = 'var(--green-dark)';
+    } catch(e) {
+      status.textContent = 'Não consegui ler a nota. Preencha manualmente.';
+      status.style.color = 'var(--red)';
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
