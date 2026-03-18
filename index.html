@@ -3,35 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finanças do Casal</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Paronetto's Green</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f4f0;
+  --bg: #f2f7f4;
   --surface: #ffffff;
-  --surface2: #f0ede8;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.14);
-  --text: #1a1a1a;
-  --text2: #6b6760;
-  --text3: #a09c97;
+  --surface2: #e8f2ec;
+  --border: rgba(15,110,86,0.10);
+  --border2: rgba(15,110,86,0.22);
+  --text: #0d2b20;
+  --text2: #4a7a62;
+  --text3: #89b09a;
   --green: #1D9E75;
   --green-dark: #0F6E56;
-  --green-light: #e8f7f2;
-  --amber: #c97c1a;
+  --green-mid: #2dbd8e;
+  --green-light: #d6f0e6;
+  --green-xlight: #edf8f3;
+  --amber: #b86e0a;
   --amber-light: #fef3e0;
-  --red: #c53030;
+  --red: #b52a2a;
   --red-light: #fdecea;
-  --blue: #2563eb;
   --radius: 14px;
-  --radius-sm: 8px;
+  --radius-sm: 9px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
 header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: var(--green-dark);
   padding: 0 20px;
   display: flex;
   align-items: center;
@@ -41,41 +41,53 @@ header {
   top: 0;
   z-index: 100;
 }
-.logo { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.3px; }
-.logo span { color: var(--green); }
-.month-label { font-size: 13px; color: var(--text2); font-family: 'DM Mono', monospace; }
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.4px;
+}
+.logo-pig {
+  width: 32px; height: 32px; background: rgba(255,255,255,0.15);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.logo span { color: #a8e6cc; }
+.month-label {
+  font-size: 12px; color: rgba(255,255,255,0.6);
+  font-family: 'DM Mono', monospace; background: rgba(255,255,255,0.1);
+  padding: 4px 10px; border-radius: 20px;
+}
 
 nav {
   display: flex;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: var(--green-dark);
+  border-bottom: none;
   padding: 0 20px;
   gap: 0;
   overflow-x: auto;
 }
 nav button {
   background: none; border: none; border-bottom: 2px solid transparent;
-  padding: 12px 16px; font-size: 13px; font-weight: 500; color: var(--text2);
+  padding: 10px 16px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55);
   cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif;
   transition: color 0.15s;
 }
-nav button.active { color: var(--green); border-bottom-color: var(--green); }
-nav button:hover:not(.active) { color: var(--text); }
+nav button.active { color: #fff; border-bottom-color: #a8e6cc; }
+nav button:hover:not(.active) { color: rgba(255,255,255,0.85); }
 
-main { padding: 20px; max-width: 640px; margin: 0 auto; }
-
+main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .page { display: none; }
 .page.active { display: block; }
 
-.metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+.metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
 .metric {
   background: var(--surface); border-radius: var(--radius); padding: 14px 16px;
   border: 1px solid var(--border);
 }
-.metric-label { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-.metric-value { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
+.metric-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+.metric-value { font-size: 21px; font-weight: 600; color: var(--text); letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
 .metric-value.warn { color: var(--amber); }
 .metric-value.danger { color: var(--red); }
+.metric-value.good { color: var(--green-dark); }
 
 .alert {
   border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 10px;
@@ -86,8 +98,7 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 
 .section-label {
   font-size: 11px; font-weight: 600; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.07em;
-  margin: 20px 0 10px;
+  text-transform: uppercase; letter-spacing: 0.07em; margin: 18px 0 10px;
 }
 
 .card {
@@ -97,100 +108,111 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 
 .cat-item { padding: 12px 16px; border-bottom: 1px solid var(--border); }
 .cat-item:last-child { border-bottom: none; }
-.cat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.cat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
 .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.cat-name { font-size: 13px; font-weight: 500; flex: 1; }
-.cat-badge {
-  font-size: 11px; font-weight: 600; padding: 2px 8px;
-  border-radius: 20px; font-family: 'DM Mono', monospace;
-}
-.cat-badge.ok { background: #e8f7f2; color: #0a5c3f; }
+.cat-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--text); }
+.cat-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; font-family: 'DM Mono', monospace; }
+.cat-badge.ok { background: var(--green-light); color: var(--green-dark); }
 .cat-badge.warn { background: var(--amber-light); color: #7a4a0a; }
 .cat-badge.danger { background: var(--red-light); color: #8b1a1a; }
 .cat-amounts { font-size: 12px; color: var(--text2); margin-bottom: 5px; font-family: 'DM Mono', monospace; }
-.bar-bg { background: var(--surface2); border-radius: 4px; height: 4px; overflow: hidden; }
-.bar-fill { height: 4px; border-radius: 4px; transition: width 0.4s ease; }
+.bar-bg { background: var(--surface2); border-radius: 4px; height: 5px; overflow: hidden; }
+.bar-fill { height: 5px; border-radius: 4px; transition: width 0.4s ease; }
 
 .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
 .exp-item:last-child { border-bottom: none; }
 .exp-left { display: flex; flex-direction: column; gap: 2px; }
 .exp-name { font-size: 14px; font-weight: 500; color: var(--text); }
 .exp-meta { font-size: 11px; color: var(--text3); }
-.exp-cat { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+.exp-cat-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 .exp-val { font-size: 14px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
-.exp-val.negative { color: var(--green); }
+.exp-val.negative { color: var(--green-dark); }
 
-.form-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; }
-.form-group { margin-bottom: 14px; }
-.form-label { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+.form-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; margin-bottom: 12px; }
+.form-group { margin-bottom: 13px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 5px; }
 .form-control {
   width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
   border: 1px solid var(--border2); font-size: 14px; font-family: 'DM Sans', sans-serif;
-  background: var(--surface); color: var(--text); outline: none;
-  transition: border-color 0.15s;
+  background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s;
 }
-.form-control:focus { border-color: var(--green); }
+.form-control:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.btn-submit {
-  width: 100%; padding: 12px; border-radius: var(--radius-sm);
-  background: var(--green); color: #fff; border: none;
-  font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif;
-  cursor: pointer; transition: background 0.15s, transform 0.1s;
-  margin-top: 4px;
-}
-.btn-submit:hover { background: var(--green-dark); }
-.btn-submit:active { transform: scale(0.98); }
 
-.who-toggle { display: flex; gap: 8px; }
+.who-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
 .who-btn {
   flex: 1; padding: 10px; border-radius: var(--radius-sm);
   border: 1px solid var(--border2); background: var(--surface);
   font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
   color: var(--text2); transition: all 0.15s;
 }
-.who-btn.active { background: var(--green-light); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+.who-btn.active { background: var(--green-xlight); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+
+.btn-submit {
+  width: 100%; padding: 12px; border-radius: var(--radius-sm);
+  background: var(--green-dark); color: #fff; border: none;
+  font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: background 0.15s, transform 0.1s; margin-top: 4px;
+}
+.btn-submit:hover { background: var(--green); }
+.btn-submit:active { transform: scale(0.98); }
 
 .budget-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .budget-item:last-child { border-bottom: none; }
 .budget-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.budget-name { font-size: 13px; font-weight: 500; flex: 1; }
+.budget-name { font-size: 13px; font-weight: 500; flex: 1; color: var(--text); }
+.budget-spent { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; min-width: 70px; text-align: right; }
 .budget-input {
   width: 90px; padding: 6px 10px; border-radius: var(--radius-sm);
   border: 1px solid var(--border2); font-size: 13px; font-family: 'DM Mono', monospace;
-  text-align: right; color: var(--text); outline: none;
+  text-align: right; color: var(--text); outline: none; background: var(--surface);
 }
 .budget-input:focus { border-color: var(--green); }
 
 .rep-person-block { padding: 12px 16px; }
-.rep-person-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.rep-person-name {
+  font-size: 13px; font-weight: 600; color: var(--green-dark);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.rep-person-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--green-light); display: flex; align-items: center;
+  justify-content: center; font-size: 11px; font-weight: 600; color: var(--green-dark);
+}
 .rep-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
 .rep-row:last-child { border-bottom: none; }
 .rep-label { color: var(--text2); }
-.rep-val { font-weight: 500; font-family: 'DM Mono', monospace; }
-
+.rep-val { font-weight: 500; font-family: 'DM Mono', monospace; color: var(--text); }
 .divider { height: 1px; background: var(--border); margin: 0 16px; }
 
 .empty { text-align: center; padding: 32px 20px; color: var(--text3); font-size: 14px; }
 
-.delete-btn {
-  background: none; border: none; color: var(--text3); cursor: pointer;
-  font-size: 16px; padding: 0 0 0 8px; line-height: 1;
-}
-.delete-btn:hover { color: var(--red); }
-
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--text); color: #fff; padding: 10px 20px; border-radius: 20px;
+  background: var(--green-dark); color: #fff; padding: 10px 20px; border-radius: 20px;
   font-size: 13px; font-weight: 500; transition: transform 0.3s ease; z-index: 999;
   pointer-events: none;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
+
+.pig-summary {
+  background: var(--green-dark); border-radius: var(--radius); padding: 16px 20px;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 14px;
+}
+.pig-icon { font-size: 32px; }
+.pig-text { flex: 1; }
+.pig-title { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
+.pig-amount { font-size: 24px; font-weight: 600; color: #fff; font-family: 'DM Mono', monospace; letter-spacing: -0.5px; }
+.pig-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">finanças <span>casal</span></div>
+  <div class="logo">
+    <div class="logo-pig">🐷</div>
+    Paronetto's <span>Green</span>
+  </div>
   <div class="month-label" id="month-label"></div>
 </header>
 
@@ -204,6 +226,15 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 <main>
 
 <div id="dash" class="page active">
+  <div style="height:14px;"></div>
+  <div class="pig-summary">
+    <div class="pig-icon">🐷</div>
+    <div class="pig-text">
+      <div class="pig-title">total gasto em março</div>
+      <div class="pig-amount" id="pig-total">R$ 0,00</div>
+      <div class="pig-sub" id="pig-sub"></div>
+    </div>
+  </div>
   <div class="metrics" id="dash-metrics"></div>
   <div id="dash-alerts"></div>
   <div class="section-label">por categoria</div>
@@ -213,11 +244,12 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 </div>
 
 <div id="add" class="page">
+  <div style="height:14px;"></div>
   <div class="form-card">
-    <div class="section-label" style="margin-top:0">quem pagou</div>
-    <div class="who-toggle" style="margin-bottom:16px;">
-      <button class="who-btn active" id="who-eu" onclick="setWho('Eu')">Eu</button>
-      <button class="who-btn" id="who-esp" onclick="setWho('Esposa')">Esposa</button>
+    <div class="section-label" style="margin-top:0;">quem pagou</div>
+    <div class="who-toggle">
+      <button class="who-btn active" id="who-filipe" onclick="setWho('Filipe')">🧔 Filipe</button>
+      <button class="who-btn" id="who-beatriz" onclick="setWho('Beatriz')">👩 Beatriz</button>
     </div>
     <div class="form-group">
       <label class="form-label">Descrição</label>
@@ -242,12 +274,13 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 </div>
 
 <div id="budget" class="page">
+  <div style="height:14px;"></div>
   <div class="form-card">
-    <div class="section-label" style="margin-top:0">limites mensais por categoria</div>
+    <div class="section-label" style="margin-top:0;">limites mensais por categoria</div>
     <div id="budget-list"></div>
   </div>
-  <div class="form-card" style="margin-top:12px;">
-    <div class="section-label" style="margin-top:0">nova categoria</div>
+  <div class="form-card">
+    <div class="section-label" style="margin-top:0;">nova categoria</div>
     <div class="form-group">
       <label class="form-label">Nome</label>
       <input class="form-control" id="new-cat-name" placeholder="Ex: Lazer, Academia...">
@@ -276,6 +309,7 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 </div>
 
 <div id="report" class="page">
+  <div style="height:14px;"></div>
   <div class="metrics" id="rep-metrics"></div>
   <div class="section-label">por pessoa</div>
   <div class="card" id="rep-person"></div>
@@ -288,147 +322,142 @@ main { padding: 20px; max-width: 640px; margin: 0 auto; }
 <div class="toast" id="toast"></div>
 
 <script>
-var selectedWho = 'Eu';
+var selectedWho = 'Filipe';
 
 var defaultState = {
   categories: [
-    {id:'alim-merc', name:'Mercados & Padarias', color:'#1D9E75', limit:1500},
-    {id:'alim-fora', name:'Comida fora de casa', color:'#0F6E56', limit:500},
-    {id:'saude',     name:'Saúde & Farmácia',    color:'#D85A30', limit:800},
-    {id:'transp',    name:'Transporte & Combustível', color:'#2563eb', limit:800},
-    {id:'educ',      name:'Educação & Escola',    color:'#7F77DD', limit:1600},
-    {id:'bebe',      name:'Bebê & Filhos',         color:'#D4537E', limit:900},
-    {id:'contas',    name:'Contas & Serviços',     color:'#888780', limit:1100},
-    {id:'pgto',      name:'Pagamentos & Crédito',  color:'#c97c1a', limit:400},
-    {id:'pessoal',   name:'Pessoal & Serviços',    color:'#639922', limit:900},
-    {id:'familia',   name:'Família',               color:'#c53030', limit:200},
-    {id:'outros',    name:'Outros',                color:'#5DCAA5', limit:300}
+    {id:'alim-merc', name:'Mercados & Padarias',      color:'#1D9E75', limit:1500},
+    {id:'alim-fora', name:'Comida fora de casa',       color:'#0F6E56', limit:500},
+    {id:'saude',     name:'Saúde & Farmácia',          color:'#D85A30', limit:800},
+    {id:'transp',    name:'Transporte & Combustível',  color:'#2563eb', limit:800},
+    {id:'educ',      name:'Educação & Escola',         color:'#7F77DD', limit:1600},
+    {id:'bebe',      name:'Bebê & Filhos',             color:'#D4537E', limit:900},
+    {id:'contas',    name:'Contas & Serviços',         color:'#888780', limit:1100},
+    {id:'pgto',      name:'Pagamentos & Crédito',      color:'#c97c1a', limit:400},
+    {id:'pessoal',   name:'Pessoal & Serviços',        color:'#639922', limit:900},
+    {id:'familia',   name:'Família',                   color:'#c53030', limit:200},
+    {id:'outros',    name:'Outros',                    color:'#5DCAA5', limit:300}
   ],
   expenses: [
-    {id:1,  who:'Eu',     desc:'Hotel',               val:206.75, cat:'outros',    date:'2026-03-01'},
-    {id:2,  who:'Eu',     desc:'Colégio Hortus',       val:1290,   cat:'educ',      date:'2026-03-01'},
-    {id:3,  who:'Eu',     desc:'Plano de saúde',       val:195.71, cat:'saude',     date:'2026-03-01'},
-    {id:4,  who:'Eu',     desc:'Plano',                val:630,    cat:'saude',     date:'2026-03-01'},
-    {id:5,  who:'Eu',     desc:'Mercado',              val:231.18, cat:'alim-merc', date:'2026-03-02'},
-    {id:6,  who:'Eu',     desc:'Hortus Comércio (mercadinho)', val:47.03, cat:'alim-merc', date:'2026-03-02'},
-    {id:7,  who:'Eu',     desc:'Hortus dnv (mercadinho)', val:7.64, cat:'alim-merc', date:'2026-03-02'},
-    {id:8,  who:'Eu',     desc:'Drogasil',             val:96.69,  cat:'saude',     date:'2026-03-03'},
-    {id:9,  who:'Eu',     desc:'Parque Ibirapuera',    val:12.90,  cat:'outros',    date:'2026-03-03'},
-    {id:10, who:'Eu',     desc:'Fralda Bento',         val:235.80, cat:'bebe',      date:'2026-03-04'},
-    {id:11, who:'Esposa', desc:'Camila',               val:250,    cat:'pessoal',   date:'2026-03-04'},
-    {id:12, who:'Eu',     desc:'Beep (vacina)',         val:439,    cat:'bebe',      date:'2026-03-05'},
-    {id:13, who:'Eu',     desc:'Léo',                  val:323,    cat:'pessoal',   date:'2026-03-05'},
-    {id:14, who:'Eu',     desc:'Tutti Belle (padaria)', val:14.78, cat:'alim-merc', date:'2026-03-05'},
-    {id:15, who:'Eu',     desc:'Uber',                 val:10.95,  cat:'transp',    date:'2026-03-06'},
-    {id:16, who:'Eu',     desc:'Uber',                 val:11.95,  cat:'transp',    date:'2026-03-06'},
-    {id:17, who:'Eu',     desc:'PbKids',               val:100,    cat:'bebe',      date:'2026-03-06'},
-    {id:18, who:'Eu',     desc:'Antecipação fatura',   val:123,    cat:'pgto',      date:'2026-03-07'},
-    {id:19, who:'Eu',     desc:'Antecipação fatura',   val:54.29,  cat:'pgto',      date:'2026-03-07'},
-    {id:20, who:'Eu',     desc:'Fixodent',             val:99.75,  cat:'saude',     date:'2026-03-07'},
-    {id:21, who:'Eu',     desc:'Assinatura Drive',      val:50,    cat:'contas',    date:'2026-03-08'},
-    {id:22, who:'Eu',     desc:'Estacionamento BNI',   val:15,     cat:'transp',    date:'2026-03-08'},
-    {id:23, who:'Eu',     desc:'Padaria',              val:27,     cat:'alim-merc', date:'2026-03-08'},
-    {id:24, who:'Eu',     desc:'Mercadinho Coworking', val:16,     cat:'alim-merc', date:'2026-03-09'},
-    {id:25, who:'Eu',     desc:'Farmácia',             val:32.56,  cat:'saude',     date:'2026-03-09'},
-    {id:26, who:'Eu',     desc:'Natura (bebê)',         val:50.38, cat:'bebe',      date:'2026-03-09'},
-    {id:27, who:'Eu',     desc:'Ifood (Poke)',          val:58.51, cat:'alim-fora', date:'2026-03-10'},
-    {id:28, who:'Eu',     desc:'Kennedy Drive',         val:115.80,cat:'transp',    date:'2026-03-10'},
-    {id:29, who:'Eu',     desc:'Posto de Gasolina',    val:215.80, cat:'transp',    date:'2026-03-10'},
-    {id:30, who:'Eu',     desc:'Conveniência',         val:13.75,  cat:'alim-fora', date:'2026-03-10'},
-    {id:31, who:'Eu',     desc:'Mercado',              val:104.10, cat:'alim-merc', date:'2026-03-11'},
-    {id:32, who:'Eu',     desc:'Google Workspace',     val:92.40,  cat:'contas',    date:'2026-03-11'},
-    {id:33, who:'Eu',     desc:'Enel',                 val:265.92, cat:'contas',    date:'2026-03-11'},
-    {id:34, who:'Eu',     desc:'Padaria',              val:20,     cat:'alim-merc', date:'2026-03-12'},
-    {id:35, who:'Eu',     desc:'Mercado',              val:59.35,  cat:'alim-merc', date:'2026-03-12'},
-    {id:36, who:'Eu',     desc:'Gráfica',              val:150,    cat:'outros',    date:'2026-03-12'},
-    {id:37, who:'Eu',     desc:'Mercado',              val:120.53, cat:'alim-merc', date:'2026-03-13'},
-    {id:38, who:'Eu',     desc:'Reportei',             val:45.24,  cat:'contas',    date:'2026-03-13'},
-    {id:39, who:'Eu',     desc:'Conveniência Coworking',val:22,   cat:'alim-fora', date:'2026-03-13'},
-    {id:40, who:'Eu',     desc:'Farmácia',             val:28.06,  cat:'saude',     date:'2026-03-14'},
-    {id:41, who:'Eu',     desc:'Vivo',                 val:101.19, cat:'contas',    date:'2026-03-14'},
-    {id:42, who:'Eu',     desc:'Estacionamento Coworking', val:323, cat:'transp',  date:'2026-03-14'},
-    {id:43, who:'Eu',     desc:'Mercadinho Coworking', val:18,     cat:'alim-merc', date:'2026-03-15'},
-    {id:44, who:'Eu',     desc:'Marmita',              val:30,     cat:'alim-fora', date:'2026-03-15'},
-    {id:45, who:'Eu',     desc:'Papelaria',            val:10,     cat:'outros',    date:'2026-03-15'},
-    {id:46, who:'Eu',     desc:'Meu pai',              val:50,     cat:'familia',   date:'2026-03-15'},
-    {id:47, who:'Eu',     desc:'Assb Comércio',        val:4.99,   cat:'outros',    date:'2026-03-15'},
-    {id:48, who:'Eu',     desc:'Marmita Anima',        val:22,     cat:'alim-fora', date:'2026-03-16'},
-    {id:49, who:'Eu',     desc:'Sacolão',              val:63.03,  cat:'alim-merc', date:'2026-03-16'},
-    {id:50, who:'Eu',     desc:'Posto',                val:150,    cat:'transp',    date:'2026-03-16'},
-    {id:51, who:'Eu',     desc:'Drogaria SP',          val:70.96,  cat:'saude',     date:'2026-03-16'},
-    {id:52, who:'Eu',     desc:'Negociação PicPay',    val:11.57,  cat:'pgto',      date:'2026-03-17'},
-    {id:53, who:'Eu',     desc:'Claro TV',             val:197.87, cat:'contas',    date:'2026-03-17'},
-    {id:54, who:'Eu',     desc:'Padaria',              val:116.5,  cat:'alim-merc', date:'2026-03-17'},
-    {id:55, who:'Eu',     desc:'McDonald\'s',          val:142.40, cat:'alim-fora', date:'2026-03-17'},
-    {id:56, who:'Eu',     desc:'Posto',                val:310.39, cat:'transp',    date:'2026-03-17'},
-    {id:57, who:'Eu',     desc:'Mercado',              val:150.06, cat:'alim-merc', date:'2026-03-18'},
-    {id:58, who:'Eu',     desc:'Marmita',              val:35.50,  cat:'alim-fora', date:'2026-03-18'},
-    {id:59, who:'Eu',     desc:'Colégio Hortus (2)',   val:0,      cat:'educ',      date:'2026-03-18'},
-    {id:60, who:'Eu',     desc:'Drogaria SP',          val:75.77,  cat:'saude',     date:'2026-03-18'},
-    {id:61, who:'Eu',     desc:'Drogaria SP',          val:8.99,   cat:'saude',     date:'2026-03-18'},
-    {id:62, who:'Eu',     desc:'Pagamento Nubank',     val:103.62, cat:'pgto',      date:'2026-03-18'},
-    {id:63, who:'Eu',     desc:'Burger King',          val:119.70, cat:'alim-fora', date:'2026-03-18'},
-    {id:64, who:'Eu',     desc:'Casa de Carnes',       val:9.44,   cat:'alim-fora', date:'2026-03-18'},
-    {id:65, who:'Eu',     desc:'GETMO reembolso',      val:-100,   cat:'pgto',      date:'2026-03-18'},
-    {id:66, who:'Eu',     desc:'Padaria',              val:36.4,   cat:'alim-merc', date:'2026-03-18'},
-    {id:67, who:'Eu',     desc:'Marmita',              val:32.4,   cat:'alim-fora', date:'2026-03-18'},
-    {id:68, who:'Eu',     desc:'Farmácia',             val:30.90,  cat:'saude',     date:'2026-03-18'},
-    {id:69, who:'Eu',     desc:'São Caetano do Sul (?)', val:39.80,cat:'outros',    date:'2026-03-18'},
-    {id:70, who:'Eu',     desc:'Smarche (mercado)',    val:16.90,  cat:'alim-merc', date:'2026-03-18'},
-    {id:71, who:'Eu',     desc:'Mercado',              val:100.79, cat:'alim-merc', date:'2026-03-18'},
-    {id:72, who:'Eu',     desc:'Padaria',              val:18.13,  cat:'alim-merc', date:'2026-03-18'},
-    {id:73, who:'Eu',     desc:'Sacolão',              val:123.65, cat:'alim-merc', date:'2026-03-18'},
-    {id:74, who:'Eu',     desc:'Joanin (mercado)',     val:47.43,  cat:'alim-merc', date:'2026-03-18'},
-    {id:75, who:'Eu',     desc:'Almoco Anima',         val:72.80,  cat:'alim-fora', date:'2026-03-18'},
-    {id:76, who:'Eu',     desc:'Farmácia',             val:175.69, cat:'saude',     date:'2026-03-18'},
-    {id:77, who:'Eu',     desc:'Farmácia',             val:35.58,  cat:'saude',     date:'2026-03-18'},
-    {id:78, who:'Eu',     desc:'Mercadinho Coworking', val:10.50,  cat:'alim-merc', date:'2026-03-18'},
-    {id:79, who:'Eu',     desc:'Crédito Shopee',       val:80.80,  cat:'pgto',      date:'2026-03-18'},
-    {id:80, who:'Eu',     desc:'Estacionamento PSC',   val:17,     cat:'transp',    date:'2026-03-18'},
-    {id:81, who:'Eu',     desc:'Mercado',              val:33.78,  cat:'alim-merc', date:'2026-03-18'},
-    {id:82, who:'Eu',     desc:'Vivo',                 val:278.36, cat:'contas',    date:'2026-03-18'},
-    {id:83, who:'Eu',     desc:'Esfiha',               val:89.64,  cat:'alim-fora', date:'2026-03-18'},
-    {id:84, who:'Eu',     desc:'São Caetano do Sul (?)', val:41.70,cat:'outros',    date:'2026-03-18'},
-    {id:85, who:'Eu',     desc:'Uber (Bento)',          val:13.96, cat:'transp',    date:'2026-03-18'},
-    {id:86, who:'Eu',     desc:'Acordo Anhanguera',    val:210,    cat:'educ',      date:'2026-03-18'},
-    {id:87, who:'Eu',     desc:'Mercadinho Coworking', val:7,      cat:'alim-merc', date:'2026-03-18'},
-    {id:88, who:'Eu',     desc:'Padaria Monte Alto',   val:47.25,  cat:'alim-merc', date:'2026-03-18'},
-    {id:89, who:'Eu',     desc:'Ifood McDonald\'s',    val:118,    cat:'alim-fora', date:'2026-03-18'},
-    {id:90, who:'Eu',     desc:'Mercadinho Hotel',     val:47.45,  cat:'alim-merc', date:'2026-03-18'},
-    {id:91, who:'Eu',     desc:'Estacionamento Hotel', val:40,     cat:'transp',    date:'2026-03-18'},
-    {id:92, who:'Eu',     desc:'Barbearia',            val:110,    cat:'pessoal',   date:'2026-03-18'},
-    {id:93, who:'Eu',     desc:'Swift',                val:97.50,  cat:'alim-merc', date:'2026-03-18'},
-    {id:94, who:'Eu',     desc:'Joanin (mercado)',     val:13.99,  cat:'alim-merc', date:'2026-03-18'},
-    {id:95, who:'Eu',     desc:'Pastel',               val:89,     cat:'alim-fora', date:'2026-03-18'},
-    {id:96, who:'Eu',     desc:'Hostinger',            val:57.22,  cat:'contas',    date:'2026-03-18'},
-    {id:97, who:'Eu',     desc:'Marmita',              val:33.90,  cat:'alim-fora', date:'2026-03-18'},
-    {id:98, who:'Eu',     desc:'Uber pra vir hoje',    val:16.93,  cat:'transp',    date:'2026-03-18'},
-    {id:99, who:'Eu',     desc:'Carro lavar',          val:85,     cat:'transp',    date:'2026-03-18'},
-    {id:100,who:'Eu',     desc:'Pai',                  val:17,     cat:'familia',   date:'2026-03-18'},
-    {id:101,who:'Esposa', desc:'Amanda',               val:210,    cat:'pessoal',   date:'2026-03-10'}
+    {id:1,  who:'Filipe',  desc:'Hotel',                      val:206.75, cat:'outros',    date:'2026-03-01'},
+    {id:2,  who:'Filipe',  desc:'Colégio Hortus',             val:1290,   cat:'educ',      date:'2026-03-01'},
+    {id:3,  who:'Filipe',  desc:'Plano de saúde',             val:195.71, cat:'saude',     date:'2026-03-01'},
+    {id:4,  who:'Filipe',  desc:'Plano',                      val:630,    cat:'saude',     date:'2026-03-01'},
+    {id:5,  who:'Filipe',  desc:'Mercado',                    val:231.18, cat:'alim-merc', date:'2026-03-02'},
+    {id:6,  who:'Filipe',  desc:'Hortus Comércio (mercadinho)',val:47.03, cat:'alim-merc', date:'2026-03-02'},
+    {id:7,  who:'Filipe',  desc:'Hortus dnv (mercadinho)',    val:7.64,   cat:'alim-merc', date:'2026-03-02'},
+    {id:8,  who:'Filipe',  desc:'Drogasil',                   val:96.69,  cat:'saude',     date:'2026-03-03'},
+    {id:9,  who:'Filipe',  desc:'Parque Ibirapuera',          val:12.90,  cat:'outros',    date:'2026-03-03'},
+    {id:10, who:'Filipe',  desc:'Fralda Bento',               val:235.80, cat:'bebe',      date:'2026-03-04'},
+    {id:11, who:'Beatriz', desc:'Camila',                     val:250,    cat:'pessoal',   date:'2026-03-04'},
+    {id:12, who:'Filipe',  desc:'Beep (vacina)',               val:439,   cat:'bebe',      date:'2026-03-05'},
+    {id:13, who:'Filipe',  desc:'Léo',                        val:323,    cat:'pessoal',   date:'2026-03-05'},
+    {id:14, who:'Filipe',  desc:'Tutti Belle (padaria)',      val:14.78,  cat:'alim-merc', date:'2026-03-05'},
+    {id:15, who:'Filipe',  desc:'Uber',                       val:10.95,  cat:'transp',    date:'2026-03-06'},
+    {id:16, who:'Filipe',  desc:'Uber',                       val:11.95,  cat:'transp',    date:'2026-03-06'},
+    {id:17, who:'Filipe',  desc:'PbKids',                     val:100,    cat:'bebe',      date:'2026-03-06'},
+    {id:18, who:'Filipe',  desc:'Antecipação fatura',         val:123,    cat:'pgto',      date:'2026-03-07'},
+    {id:19, who:'Filipe',  desc:'Antecipação fatura',         val:54.29,  cat:'pgto',      date:'2026-03-07'},
+    {id:20, who:'Filipe',  desc:'Fixodent',                   val:99.75,  cat:'saude',     date:'2026-03-07'},
+    {id:21, who:'Filipe',  desc:'Assinatura Drive',           val:50,     cat:'contas',    date:'2026-03-08'},
+    {id:22, who:'Filipe',  desc:'Estacionamento BNI',         val:15,     cat:'transp',    date:'2026-03-08'},
+    {id:23, who:'Filipe',  desc:'Padaria',                    val:27,     cat:'alim-merc', date:'2026-03-08'},
+    {id:24, who:'Filipe',  desc:'Mercadinho Coworking',       val:16,     cat:'alim-merc', date:'2026-03-09'},
+    {id:25, who:'Filipe',  desc:'Farmácia',                   val:32.56,  cat:'saude',     date:'2026-03-09'},
+    {id:26, who:'Filipe',  desc:'Natura (bebê)',              val:50.38,  cat:'bebe',      date:'2026-03-09'},
+    {id:27, who:'Filipe',  desc:'Ifood (Poke)',               val:58.51,  cat:'alim-fora', date:'2026-03-10'},
+    {id:28, who:'Filipe',  desc:'Kennedy Drive',              val:115.80, cat:'transp',    date:'2026-03-10'},
+    {id:29, who:'Filipe',  desc:'Posto de Gasolina',          val:215.80, cat:'transp',    date:'2026-03-10'},
+    {id:30, who:'Filipe',  desc:'Conveniência',               val:13.75,  cat:'alim-fora', date:'2026-03-10'},
+    {id:31, who:'Filipe',  desc:'Mercado',                    val:104.10, cat:'alim-merc', date:'2026-03-11'},
+    {id:32, who:'Filipe',  desc:'Google Workspace',           val:92.40,  cat:'contas',    date:'2026-03-11'},
+    {id:33, who:'Filipe',  desc:'Enel',                       val:265.92, cat:'contas',    date:'2026-03-11'},
+    {id:34, who:'Filipe',  desc:'Padaria',                    val:20,     cat:'alim-merc', date:'2026-03-12'},
+    {id:35, who:'Filipe',  desc:'Mercado',                    val:59.35,  cat:'alim-merc', date:'2026-03-12'},
+    {id:36, who:'Filipe',  desc:'Gráfica',                    val:150,    cat:'outros',    date:'2026-03-12'},
+    {id:37, who:'Filipe',  desc:'Mercado',                    val:120.53, cat:'alim-merc', date:'2026-03-13'},
+    {id:38, who:'Filipe',  desc:'Reportei',                   val:45.24,  cat:'contas',    date:'2026-03-13'},
+    {id:39, who:'Filipe',  desc:'Conveniência Coworking',     val:22,     cat:'alim-fora', date:'2026-03-13'},
+    {id:40, who:'Filipe',  desc:'Farmácia',                   val:28.06,  cat:'saude',     date:'2026-03-14'},
+    {id:41, who:'Filipe',  desc:'Vivo',                       val:101.19, cat:'contas',    date:'2026-03-14'},
+    {id:42, who:'Filipe',  desc:'Estacionamento Coworking',   val:323,    cat:'transp',    date:'2026-03-14'},
+    {id:43, who:'Filipe',  desc:'Mercadinho Coworking',       val:18,     cat:'alim-merc', date:'2026-03-15'},
+    {id:44, who:'Filipe',  desc:'Marmita',                    val:30,     cat:'alim-fora', date:'2026-03-15'},
+    {id:45, who:'Filipe',  desc:'Papelaria',                  val:10,     cat:'outros',    date:'2026-03-15'},
+    {id:46, who:'Filipe',  desc:'Meu pai',                    val:50,     cat:'familia',   date:'2026-03-15'},
+    {id:47, who:'Filipe',  desc:'Assb Comércio',              val:4.99,   cat:'outros',    date:'2026-03-15'},
+    {id:48, who:'Filipe',  desc:'Marmita Anima',              val:22,     cat:'alim-fora', date:'2026-03-16'},
+    {id:49, who:'Filipe',  desc:'Sacolão',                    val:63.03,  cat:'alim-merc', date:'2026-03-16'},
+    {id:50, who:'Filipe',  desc:'Posto',                      val:150,    cat:'transp',    date:'2026-03-16'},
+    {id:51, who:'Filipe',  desc:'Drogaria SP',                val:70.96,  cat:'saude',     date:'2026-03-16'},
+    {id:52, who:'Filipe',  desc:'Negociação PicPay',          val:11.57,  cat:'pgto',      date:'2026-03-17'},
+    {id:53, who:'Filipe',  desc:'Claro TV',                   val:197.87, cat:'contas',    date:'2026-03-17'},
+    {id:54, who:'Filipe',  desc:'Padaria',                    val:116.5,  cat:'alim-merc', date:'2026-03-17'},
+    {id:55, who:'Filipe',  desc:"McDonald's",                 val:142.40, cat:'alim-fora', date:'2026-03-17'},
+    {id:56, who:'Filipe',  desc:'Posto',                      val:310.39, cat:'transp',    date:'2026-03-17'},
+    {id:57, who:'Filipe',  desc:'Mercado',                    val:150.06, cat:'alim-merc', date:'2026-03-18'},
+    {id:58, who:'Filipe',  desc:'Marmita',                    val:35.50,  cat:'alim-fora', date:'2026-03-18'},
+    {id:59, who:'Filipe',  desc:'Drogaria SP',                val:75.77,  cat:'saude',     date:'2026-03-18'},
+    {id:60, who:'Filipe',  desc:'Drogaria SP',                val:8.99,   cat:'saude',     date:'2026-03-18'},
+    {id:61, who:'Filipe',  desc:'Pagamento Nubank',           val:103.62, cat:'pgto',      date:'2026-03-18'},
+    {id:62, who:'Filipe',  desc:'Burger King',                val:119.70, cat:'alim-fora', date:'2026-03-18'},
+    {id:63, who:'Filipe',  desc:'Casa de Carnes',             val:9.44,   cat:'alim-fora', date:'2026-03-18'},
+    {id:64, who:'Filipe',  desc:'GETMO reembolso',            val:-100,   cat:'pgto',      date:'2026-03-18'},
+    {id:65, who:'Filipe',  desc:'Padaria',                    val:36.4,   cat:'alim-merc', date:'2026-03-18'},
+    {id:66, who:'Filipe',  desc:'Marmita',                    val:32.4,   cat:'alim-fora', date:'2026-03-18'},
+    {id:67, who:'Filipe',  desc:'Farmácia',                   val:30.90,  cat:'saude',     date:'2026-03-18'},
+    {id:68, who:'Filipe',  desc:'São Caetano do Sul (?)',     val:39.80,  cat:'outros',    date:'2026-03-18'},
+    {id:69, who:'Filipe',  desc:'Smarche (mercado)',          val:16.90,  cat:'alim-merc', date:'2026-03-18'},
+    {id:70, who:'Filipe',  desc:'Mercado',                    val:100.79, cat:'alim-merc', date:'2026-03-18'},
+    {id:71, who:'Filipe',  desc:'Padaria',                    val:18.13,  cat:'alim-merc', date:'2026-03-18'},
+    {id:72, who:'Filipe',  desc:'Sacolão',                    val:123.65, cat:'alim-merc', date:'2026-03-18'},
+    {id:73, who:'Filipe',  desc:'Joanin (mercado)',           val:47.43,  cat:'alim-merc', date:'2026-03-18'},
+    {id:74, who:'Filipe',  desc:'Almoco Anima',               val:72.80,  cat:'alim-fora', date:'2026-03-18'},
+    {id:75, who:'Filipe',  desc:'Farmácia',                   val:175.69, cat:'saude',     date:'2026-03-18'},
+    {id:76, who:'Filipe',  desc:'Farmácia',                   val:35.58,  cat:'saude',     date:'2026-03-18'},
+    {id:77, who:'Filipe',  desc:'Mercadinho Coworking',       val:10.50,  cat:'alim-merc', date:'2026-03-18'},
+    {id:78, who:'Filipe',  desc:'Crédito Shopee',             val:80.80,  cat:'pgto',      date:'2026-03-18'},
+    {id:79, who:'Filipe',  desc:'Estacionamento PSC',         val:17,     cat:'transp',    date:'2026-03-18'},
+    {id:80, who:'Filipe',  desc:'Mercado',                    val:33.78,  cat:'alim-merc', date:'2026-03-18'},
+    {id:81, who:'Filipe',  desc:'Vivo',                       val:278.36, cat:'contas',    date:'2026-03-18'},
+    {id:82, who:'Filipe',  desc:'Esfiha',                     val:89.64,  cat:'alim-fora', date:'2026-03-18'},
+    {id:83, who:'Filipe',  desc:'São Caetano do Sul (?)',     val:41.70,  cat:'outros',    date:'2026-03-18'},
+    {id:84, who:'Filipe',  desc:'Uber (Bento)',               val:13.96,  cat:'transp',    date:'2026-03-18'},
+    {id:85, who:'Filipe',  desc:'Acordo Anhanguera',          val:210,    cat:'educ',      date:'2026-03-18'},
+    {id:86, who:'Filipe',  desc:'Mercadinho Coworking',       val:7,      cat:'alim-merc', date:'2026-03-18'},
+    {id:87, who:'Filipe',  desc:'Padaria Monte Alto',         val:47.25,  cat:'alim-merc', date:'2026-03-18'},
+    {id:88, who:'Filipe',  desc:"Ifood McDonald's",           val:118,    cat:'alim-fora', date:'2026-03-18'},
+    {id:89, who:'Filipe',  desc:'Mercadinho Hotel',           val:47.45,  cat:'alim-merc', date:'2026-03-18'},
+    {id:90, who:'Filipe',  desc:'Estacionamento Hotel',       val:40,     cat:'transp',    date:'2026-03-18'},
+    {id:91, who:'Filipe',  desc:'Barbearia',                  val:110,    cat:'pessoal',   date:'2026-03-18'},
+    {id:92, who:'Filipe',  desc:'Swift',                      val:97.50,  cat:'alim-merc', date:'2026-03-18'},
+    {id:93, who:'Filipe',  desc:'Joanin (mercado)',           val:13.99,  cat:'alim-merc', date:'2026-03-18'},
+    {id:94, who:'Filipe',  desc:'Pastel',                     val:89,     cat:'alim-fora', date:'2026-03-18'},
+    {id:95, who:'Filipe',  desc:'Hostinger',                  val:57.22,  cat:'contas',    date:'2026-03-18'},
+    {id:96, who:'Filipe',  desc:'Marmita',                    val:33.90,  cat:'alim-fora', date:'2026-03-18'},
+    {id:97, who:'Filipe',  desc:'Uber pra vir hoje',          val:16.93,  cat:'transp',    date:'2026-03-18'},
+    {id:98, who:'Filipe',  desc:'Carro lavar',                val:85,     cat:'transp',    date:'2026-03-18'},
+    {id:99, who:'Filipe',  desc:'Pai',                        val:17,     cat:'familia',   date:'2026-03-18'},
+    {id:100,who:'Beatriz', desc:'Amanda',                     val:210,    cat:'pessoal',   date:'2026-03-10'}
   ],
-  nextId: 102
+  nextId: 101
 };
 
 var state;
 function loadState() {
   try {
-    var raw = localStorage.getItem('financas-casal-v1');
+    var raw = localStorage.getItem('paronetto-green-v1');
     state = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultState));
-  } catch(e) {
-    state = JSON.parse(JSON.stringify(defaultState));
-  }
-  state.expenses = state.expenses.filter(function(e){ return e.val !== 0; });
+  } catch(e) { state = JSON.parse(JSON.stringify(defaultState)); }
 }
 function saveState() {
-  try { localStorage.setItem('financas-casal-v1', JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem('paronetto-green-v1', JSON.stringify(state)); } catch(e) {}
 }
-
 function fmt(v) {
   return 'R$ ' + parseFloat(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 function catById(id) {
-  return state.categories.find(function(c){ return c.id === id; }) || {name: id, color:'#888', limit:0};
+  return state.categories.find(function(c){ return c.id === id; }) || {name:id, color:'#888', limit:0};
 }
 function totalByCat(catId) {
   return state.expenses.filter(function(e){ return e.cat === catId; }).reduce(function(s,e){ return s+e.val; }, 0);
@@ -447,8 +476,8 @@ function showPage(id, btn) {
 
 function setWho(who) {
   selectedWho = who;
-  document.getElementById('who-eu').classList.toggle('active', who === 'Eu');
-  document.getElementById('who-esp').classList.toggle('active', who === 'Esposa');
+  document.getElementById('who-filipe').classList.toggle('active', who === 'Filipe');
+  document.getElementById('who-beatriz').classList.toggle('active', who === 'Beatriz');
 }
 
 function showToast(msg) {
@@ -464,13 +493,19 @@ function renderDash() {
   var total = state.expenses.reduce(function(s,e){ return s+e.val; }, 0);
   var totalLimit = state.categories.reduce(function(s,c){ return s+c.limit; }, 0);
   var pct = totalLimit > 0 ? Math.round(total/totalLimit*100) : 0;
-  var cls = pct >= 100 ? 'danger' : pct >= 80 ? 'warn' : '';
+  var cls = pct >= 100 ? 'danger' : pct >= 80 ? 'warn' : 'good';
+  var restante = totalLimit - total;
+
+  document.getElementById('pig-total').textContent = fmt(total);
+  document.getElementById('pig-sub').textContent = restante >= 0
+    ? 'Restam ' + fmt(restante) + ' do orçamento'
+    : 'Orçamento estourado em ' + fmt(Math.abs(restante));
 
   document.getElementById('dash-metrics').innerHTML =
-    '<div class="metric"><div class="metric-label">Total gasto</div><div class="metric-value '+cls+'">'+fmt(total)+'</div></div>' +
     '<div class="metric"><div class="metric-label">Orçamento total</div><div class="metric-value">'+fmt(totalLimit)+'</div></div>' +
     '<div class="metric"><div class="metric-label">Utilizado</div><div class="metric-value '+cls+'">'+pct+'%</div></div>' +
-    '<div class="metric"><div class="metric-label">Lançamentos</div><div class="metric-value">'+state.expenses.length+'</div></div>';
+    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(totalByWho('Filipe'))+'</div></div>' +
+    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(totalByWho('Beatriz'))+'</div></div>';
 
   var alerts = '';
   state.categories.forEach(function(c) {
@@ -478,7 +513,7 @@ function renderDash() {
     if (spent === 0) return;
     var p = c.limit > 0 ? spent/c.limit : 0;
     if (p >= 1) alerts += '<div class="alert danger">Limite estourado: <strong>'+c.name+'</strong> — '+fmt(spent)+' de '+fmt(c.limit)+'</div>';
-    else if (p >= 0.8) alerts += '<div class="alert warn">Atenção: <strong>'+c.name+'</strong> em '+Math.round(p*100)+'% ('+fmt(spent)+' de '+fmt(c.limit)+')</div>';
+    else if (p >= 0.8) alerts += '<div class="alert warn">Atenção: <strong>'+c.name+'</strong> em '+Math.round(p*100)+'% — '+fmt(spent)+' de '+fmt(c.limit)+'</div>';
   });
   document.getElementById('dash-alerts').innerHTML = alerts;
 
@@ -490,7 +525,7 @@ function renderDash() {
     var p = c.limit > 0 ? Math.min(spent/c.limit, 1) : 0;
     var pPct = Math.round(p*100);
     var badgeCls = pPct >= 100 ? 'danger' : pPct >= 80 ? 'warn' : 'ok';
-    var barColor = pPct >= 100 ? 'var(--red)' : pPct >= 80 ? 'var(--amber)' : c.color;
+    var barColor = pPct >= 100 ? '#b52a2a' : pPct >= 80 ? '#b86e0a' : c.color;
     catsHtml +=
       '<div class="cat-item">' +
         '<div class="cat-header">' +
@@ -507,13 +542,12 @@ function renderDash() {
   var recent = state.expenses.slice().sort(function(a,b){ return b.id-a.id; }).slice(0,6);
   var recentHtml = recent.map(function(e) {
     var c = catById(e.cat);
-    var valCls = e.val < 0 ? 'negative' : '';
     return '<div class="exp-item">' +
       '<div class="exp-left">' +
         '<span class="exp-name">'+e.desc+'</span>' +
-        '<span class="exp-meta"><span class="exp-cat" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+'</span>' +
+        '<span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+'</span>' +
       '</div>' +
-      '<span class="exp-val '+valCls+'">'+fmt(e.val)+'</span>' +
+      '<span class="exp-val'+(e.val<0?' negative':'')+'">'+fmt(e.val)+'</span>' +
     '</div>';
   }).join('');
   document.getElementById('dash-recent').innerHTML = recentHtml || '<div class="empty">Nenhum lançamento</div>';
@@ -522,9 +556,11 @@ function renderDash() {
 function renderBudget() {
   var html = '';
   state.categories.forEach(function(c) {
+    var spent = totalByCat(c.id);
     html += '<div class="budget-item">' +
       '<div class="budget-dot" style="background:'+c.color+'"></div>' +
       '<span class="budget-name">'+c.name+'</span>' +
+      '<span class="budget-spent">'+fmt(spent)+'</span>' +
       '<input class="budget-input" type="number" value="'+c.limit+'" onchange="updateLimit(\''+c.id+'\',this.value)">' +
     '</div>';
   });
@@ -533,14 +569,14 @@ function renderBudget() {
 
 function updateLimit(id, val) {
   var c = state.categories.find(function(c){ return c.id === id; });
-  if (c) { c.limit = parseFloat(val) || 0; saveState(); showToast('Limite atualizado'); }
+  if (c) { c.limit = parseFloat(val)||0; saveState(); showToast('Limite atualizado'); }
 }
 
 function addCategory() {
   var name = document.getElementById('new-cat-name').value.trim();
-  var limit = parseFloat(document.getElementById('new-cat-limit').value) || 0;
+  var limit = parseFloat(document.getElementById('new-cat-limit').value)||0;
   var color = document.getElementById('new-cat-color').value;
-  if (!name) { showToast('Digite um nome para a categoria'); return; }
+  if (!name) { showToast('Digite um nome'); return; }
   state.categories.push({id:'cat-'+Date.now(), name:name, color:color, limit:limit});
   document.getElementById('new-cat-name').value = '';
   document.getElementById('new-cat-limit').value = '';
@@ -562,7 +598,7 @@ function addExpense() {
   var cat = document.getElementById('inp-cat').value;
   var date = document.getElementById('inp-date').value;
   if (!desc || !val || !date) { showToast('Preencha todos os campos'); return; }
-  state.expenses.push({id: state.nextId++, who: selectedWho, desc:desc, val:val, cat:cat, date:date});
+  state.expenses.push({id:state.nextId++, who:selectedWho, desc:desc, val:val, cat:cat, date:date});
   saveState();
   document.getElementById('inp-desc').value = '';
   document.getElementById('inp-val').value = '';
@@ -572,37 +608,41 @@ function addExpense() {
 
 function renderReport() {
   var total = state.expenses.reduce(function(s,e){ return s+e.val; }, 0);
-  var eu = totalByWho('Eu');
-  var esp = totalByWho('Esposa');
+  var filipe = totalByWho('Filipe');
+  var beatriz = totalByWho('Beatriz');
   document.getElementById('rep-metrics').innerHTML =
     '<div class="metric"><div class="metric-label">Total geral</div><div class="metric-value">'+fmt(total)+'</div></div>' +
-    '<div class="metric"><div class="metric-label">Seus gastos</div><div class="metric-value">'+fmt(eu)+'</div></div>' +
-    '<div class="metric"><div class="metric-label">Gastos dela</div><div class="metric-value">'+fmt(esp)+'</div></div>';
+    '<div class="metric"><div class="metric-label">Lançamentos</div><div class="metric-value good">'+state.expenses.length+'</div></div>' +
+    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(filipe)+'</div></div>' +
+    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(beatriz)+'</div></div>';
 
   var html = '';
-  ['Eu','Esposa'].forEach(function(who) {
+  ['Filipe','Beatriz'].forEach(function(who) {
     var whoTotal = totalByWho(who);
     if (whoTotal === 0) return;
-    html += '<div class="rep-person-block"><div class="rep-person-name">'+(who==='Eu'?'Você':'Esposa')+'</div>';
+    var initials = who === 'Filipe' ? 'FP' : 'BP';
+    html += '<div class="rep-person-block">' +
+      '<div class="rep-person-name">' +
+        '<div class="rep-person-avatar">'+initials+'</div>' + who +
+      '</div>';
     state.categories.forEach(function(c) {
       var v = state.expenses.filter(function(e){ return e.cat===c.id && e.who===who; }).reduce(function(s,e){ return s+e.val; }, 0);
       if (v !== 0) html += '<div class="rep-row"><span class="rep-label">'+c.name+'</span><span class="rep-val">'+fmt(v)+'</span></div>';
     });
     html += '</div>';
-    if (who === 'Eu') html += '<div class="divider"></div>';
+    if (who === 'Filipe') html += '<div class="divider"></div>';
   });
   document.getElementById('rep-person').innerHTML = html || '<div class="empty">Sem dados</div>';
 
-  var all = state.expenses.slice().sort(function(a,b){ return b.val-a.val; });
+  var all = state.expenses.slice().sort(function(a,b){ return b.val - a.val; });
   var allHtml = all.map(function(e) {
     var c = catById(e.cat);
-    var valCls = e.val < 0 ? 'negative' : '';
     return '<div class="exp-item">' +
       '<div class="exp-left">' +
         '<span class="exp-name">'+e.desc+'</span>' +
-        '<span class="exp-meta"><span class="exp-cat" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+' · '+c.name+'</span>' +
+        '<span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+' · '+c.name+'</span>' +
       '</div>' +
-      '<span class="exp-val '+valCls+'">'+fmt(e.val)+'</span>' +
+      '<span class="exp-val'+(e.val<0?' negative':'')+'">'+fmt(e.val)+'</span>' +
     '</div>';
   }).join('');
   document.getElementById('rep-all').innerHTML = allHtml || '<div class="empty">Sem lançamentos</div>';
