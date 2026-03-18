@@ -28,47 +28,21 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-header {
-  background: var(--green-dark);
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+header { background: var(--green-dark); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
 .logo { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.4px; }
 .logo-pig { width: 32px; height: 32px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .logo span { color: #a8e6cc; }
-
-.month-nav {
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 6px;
-}
-.month-nav button {
-  background: none; border: none; color: rgba(255,255,255,0.8); cursor: pointer;
-  font-size: 16px; padding: 0 4px; line-height: 1; font-family: 'DM Sans', sans-serif;
-  transition: color 0.15s;
-}
+.month-nav { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 6px; }
+.month-nav button { background: none; border: none; color: rgba(255,255,255,0.8); cursor: pointer; font-size: 16px; padding: 0 4px; line-height: 1; }
 .month-nav button:hover { color: #fff; }
 .month-nav span { font-size: 12px; color: #fff; font-family: 'DM Mono', monospace; min-width: 80px; text-align: center; }
-
-nav { display: flex; background: var(--green-dark); padding: 0 20px; gap: 0; overflow-x: auto; }
-nav button {
-  background: none; border: none; border-bottom: 2px solid transparent;
-  padding: 10px 16px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55);
-  cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; transition: color 0.15s;
-}
+nav { display: flex; background: var(--green-dark); padding: 0 20px; overflow-x: auto; }
+nav button { background: none; border: none; border-bottom: 2px solid transparent; padding: 10px 16px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
 nav button.active { color: #fff; border-bottom-color: #a8e6cc; }
 nav button:hover:not(.active) { color: rgba(255,255,255,0.85); }
-
 main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .page { display: none; }
 .page.active { display: block; }
-
 .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
 .metric { background: var(--surface); border-radius: var(--radius); padding: 14px 16px; border: 1px solid var(--border); }
 .metric-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
@@ -76,15 +50,11 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .metric-value.warn { color: var(--amber); }
 .metric-value.danger { color: var(--red); }
 .metric-value.good { color: var(--green-dark); }
-
 .alert { border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 10px; font-size: 13px; font-weight: 500; border: 1px solid; }
 .alert.warn { background: var(--amber-light); color: #7a4a0a; border-color: #f0c07a; }
 .alert.danger { background: var(--red-light); color: #8b1a1a; border-color: #f5a5a5; }
-
 .section-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin: 18px 0 10px; }
-
 .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-bottom: 10px; }
-
 .cat-item { padding: 12px 16px; border-bottom: 1px solid var(--border); }
 .cat-item:last-child { border-bottom: none; }
 .cat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
@@ -97,7 +67,6 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .cat-amounts { font-size: 12px; color: var(--text2); margin-bottom: 5px; font-family: 'DM Mono', monospace; }
 .bar-bg { background: var(--surface2); border-radius: 4px; height: 5px; overflow: hidden; }
 .bar-fill { height: 5px; border-radius: 4px; transition: width 0.4s ease; }
-
 .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
 .exp-item:last-child { border-bottom: none; }
 .exp-left { display: flex; flex-direction: column; gap: 2px; }
@@ -106,22 +75,20 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .exp-cat-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 .exp-val { font-size: 14px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
 .exp-val.negative { color: var(--green-dark); }
-
 .form-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; margin-bottom: 12px; }
 .form-group { margin-bottom: 13px; }
 .form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 5px; }
 .form-control { width: 100%; padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border2); font-size: 14px; font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
 .form-control:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
 .who-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
 .who-btn { flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--surface); font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--text2); transition: all 0.15s; }
 .who-btn.active { background: var(--green-xlight); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
-
 .btn-submit { width: 100%; padding: 12px; border-radius: var(--radius-sm); background: var(--green-dark); color: #fff; border: none; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.15s, transform 0.1s; margin-top: 4px; }
 .btn-submit:hover { background: var(--green); }
 .btn-submit:active { transform: scale(0.98); }
-
+.btn-outline { width: 100%; padding: 12px; border-radius: var(--radius-sm); background: none; color: var(--green-dark); border: 1px solid var(--green); font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; margin-top: 8px; }
+.btn-outline:hover { background: var(--green-xlight); }
 .budget-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .budget-item:last-child { border-bottom: none; }
 .budget-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -129,7 +96,6 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .budget-spent { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; min-width: 70px; text-align: right; }
 .budget-input { width: 90px; padding: 6px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border2); font-size: 13px; font-family: 'DM Mono', monospace; text-align: right; color: var(--text); outline: none; background: var(--surface); }
 .budget-input:focus { border-color: var(--green); }
-
 .rep-person-block { padding: 12px 16px; }
 .rep-person-name { font-size: 13px; font-weight: 600; color: var(--green-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 .rep-person-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--green-dark); }
@@ -138,15 +104,18 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 .rep-label { color: var(--text2); }
 .rep-val { font-weight: 500; font-family: 'DM Mono', monospace; color: var(--text); }
 .divider { height: 1px; background: var(--border); margin: 0 16px; }
-
 .pig-summary { background: var(--green-dark); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
 .pig-icon { font-size: 32px; }
 .pig-text { flex: 1; }
 .pig-title { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 2px; }
 .pig-amount { font-size: 24px; font-weight: 600; color: #fff; font-family: 'DM Mono', monospace; letter-spacing: -0.5px; }
 .pig-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
-
 .empty { text-align: center; padding: 32px 20px; color: var(--text3); font-size: 14px; }
+.loading { text-align: center; padding: 24px; color: var(--text3); font-size: 14px; }
+.sync-indicator { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(255,255,255,0.6); }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #a8e6cc; }
+.sync-dot.syncing { animation: pulse 1s infinite; background: #ffd700; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--green-dark); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; transition: transform 0.3s ease; z-index: 999; pointer-events: none; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
@@ -158,10 +127,13 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
     <div class="logo-pig">🐷</div>
     Paronetto's <span>Green</span>
   </div>
-  <div class="month-nav">
-    <button onclick="changeMonth(-1)">&#8249;</button>
-    <span id="month-label"></span>
-    <button onclick="changeMonth(1)">&#8250;</button>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="sync-indicator"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">ok</span></div>
+    <div class="month-nav">
+      <button onclick="changeMonth(-1)">&#8249;</button>
+      <span id="month-label"></span>
+      <button onclick="changeMonth(1)">&#8250;</button>
+    </div>
   </div>
 </header>
 
@@ -173,7 +145,6 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
 </nav>
 
 <main>
-
 <div id="dash" class="page active">
   <div style="height:14px;"></div>
   <div class="pig-summary">
@@ -218,7 +189,7 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
       <label class="form-label">Categoria</label>
       <select class="form-control" id="inp-cat"></select>
     </div>
-    <button class="btn-submit" onclick="addExpense()">Registrar gasto</button>
+    <button class="btn-submit" id="btn-add" onclick="addExpense()">Registrar gasto</button>
   </div>
 </div>
 
@@ -264,186 +235,113 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
   <div class="card" id="rep-person"></div>
   <div class="section-label">todos os lançamentos</div>
   <div class="card" id="rep-all"></div>
-  <button class="btn-submit" onclick="exportCSV()" style="margin-top:4px;">Exportar extrato CSV</button>
+  <button class="btn-outline" onclick="exportCSV()">Exportar extrato CSV</button>
   <div style="height:20px;"></div>
 </div>
-
 </main>
 
 <div class="toast" id="toast"></div>
 
 <script>
+var SUPABASE_URL = 'https://ygnpddidjmvdievprof.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_oaxikaD0uILb1LxGjErRdw_vVWBit5m';
+
 var selectedWho = 'Filipe';
 var currentYear = new Date().getFullYear();
-var currentMonth = new Date().getMonth(); // 0-based
-
+var currentMonth = new Date().getMonth();
 var MONTHS = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 
-var defaultState = {
-  categories: [
-    {id:'alim-merc', name:'Mercados & Padarias',     color:'#1D9E75', limit:1500},
-    {id:'alim-fora', name:'Comida fora de casa',      color:'#0F6E56', limit:500},
-    {id:'saude',     name:'Saúde & Farmácia',         color:'#D85A30', limit:800},
-    {id:'transp',    name:'Transporte & Combustível', color:'#2563eb', limit:800},
-    {id:'educ',      name:'Educação & Escola',        color:'#7F77DD', limit:1600},
-    {id:'bebe',      name:'Bebê & Filhos',            color:'#D4537E', limit:900},
-    {id:'contas',    name:'Contas & Serviços',        color:'#888780', limit:1100},
-    {id:'pgto',      name:'Pagamentos & Crédito',     color:'#c97c1a', limit:400},
-    {id:'pessoal',   name:'Pessoal & Serviços',       color:'#639922', limit:900},
-    {id:'familia',   name:'Família',                  color:'#c53030', limit:200},
-    {id:'outros',    name:'Outros',                   color:'#5DCAA5', limit:300}
-  ],
-  expenses: [
-    {id:1,  who:'Filipe',  desc:'Hotel',                       val:206.75, cat:'outros',    date:'2026-03-01'},
-    {id:2,  who:'Filipe',  desc:'Colégio Hortus',              val:1290,   cat:'educ',      date:'2026-03-01'},
-    {id:3,  who:'Filipe',  desc:'Plano de saúde',              val:195.71, cat:'saude',     date:'2026-03-01'},
-    {id:4,  who:'Filipe',  desc:'Plano',                       val:630,    cat:'saude',     date:'2026-03-01'},
-    {id:5,  who:'Filipe',  desc:'Mercado',                     val:231.18, cat:'alim-merc', date:'2026-03-02'},
-    {id:6,  who:'Filipe',  desc:'Hortus Comércio (mercadinho)',val:47.03,  cat:'alim-merc', date:'2026-03-02'},
-    {id:7,  who:'Filipe',  desc:'Hortus dnv (mercadinho)',     val:7.64,   cat:'alim-merc', date:'2026-03-02'},
-    {id:8,  who:'Filipe',  desc:'Drogasil',                    val:96.69,  cat:'saude',     date:'2026-03-03'},
-    {id:9,  who:'Filipe',  desc:'Parque Ibirapuera',           val:12.90,  cat:'outros',    date:'2026-03-03'},
-    {id:10, who:'Filipe',  desc:'Fralda Bento',                val:235.80, cat:'bebe',      date:'2026-03-04'},
-    {id:11, who:'Beatriz', desc:'Camila',                      val:250,    cat:'pessoal',   date:'2026-03-04'},
-    {id:12, who:'Filipe',  desc:'Beep (vacina)',                val:439,   cat:'bebe',      date:'2026-03-05'},
-    {id:13, who:'Filipe',  desc:'Léo',                         val:323,    cat:'pessoal',   date:'2026-03-05'},
-    {id:14, who:'Filipe',  desc:'Tutti Belle (padaria)',       val:14.78,  cat:'alim-merc', date:'2026-03-05'},
-    {id:15, who:'Filipe',  desc:'Uber',                        val:10.95,  cat:'transp',    date:'2026-03-06'},
-    {id:16, who:'Filipe',  desc:'Uber',                        val:11.95,  cat:'transp',    date:'2026-03-06'},
-    {id:17, who:'Filipe',  desc:'PbKids',                      val:100,    cat:'bebe',      date:'2026-03-06'},
-    {id:18, who:'Filipe',  desc:'Antecipação fatura',          val:123,    cat:'pgto',      date:'2026-03-07'},
-    {id:19, who:'Filipe',  desc:'Antecipação fatura',          val:54.29,  cat:'pgto',      date:'2026-03-07'},
-    {id:20, who:'Filipe',  desc:'Fixodent',                    val:99.75,  cat:'saude',     date:'2026-03-07'},
-    {id:21, who:'Filipe',  desc:'Assinatura Drive',            val:50,     cat:'contas',    date:'2026-03-08'},
-    {id:22, who:'Filipe',  desc:'Estacionamento BNI',          val:15,     cat:'transp',    date:'2026-03-08'},
-    {id:23, who:'Filipe',  desc:'Padaria',                     val:27,     cat:'alim-merc', date:'2026-03-08'},
-    {id:24, who:'Filipe',  desc:'Mercadinho Coworking',        val:16,     cat:'alim-merc', date:'2026-03-09'},
-    {id:25, who:'Filipe',  desc:'Farmácia',                    val:32.56,  cat:'saude',     date:'2026-03-09'},
-    {id:26, who:'Filipe',  desc:'Natura (bebê)',               val:50.38,  cat:'bebe',      date:'2026-03-09'},
-    {id:27, who:'Filipe',  desc:'Ifood (Poke)',                val:58.51,  cat:'alim-fora', date:'2026-03-10'},
-    {id:28, who:'Filipe',  desc:'Kennedy Drive',               val:115.80, cat:'transp',    date:'2026-03-10'},
-    {id:29, who:'Filipe',  desc:'Posto de Gasolina',           val:215.80, cat:'transp',    date:'2026-03-10'},
-    {id:30, who:'Filipe',  desc:'Conveniência',                val:13.75,  cat:'alim-fora', date:'2026-03-10'},
-    {id:31, who:'Filipe',  desc:'Mercado',                     val:104.10, cat:'alim-merc', date:'2026-03-11'},
-    {id:32, who:'Filipe',  desc:'Google Workspace',            val:92.40,  cat:'contas',    date:'2026-03-11'},
-    {id:33, who:'Filipe',  desc:'Enel',                        val:265.92, cat:'contas',    date:'2026-03-11'},
-    {id:34, who:'Filipe',  desc:'Padaria',                     val:20,     cat:'alim-merc', date:'2026-03-12'},
-    {id:35, who:'Filipe',  desc:'Mercado',                     val:59.35,  cat:'alim-merc', date:'2026-03-12'},
-    {id:36, who:'Filipe',  desc:'Gráfica',                     val:150,    cat:'outros',    date:'2026-03-12'},
-    {id:37, who:'Filipe',  desc:'Mercado',                     val:120.53, cat:'alim-merc', date:'2026-03-13'},
-    {id:38, who:'Filipe',  desc:'Reportei',                    val:45.24,  cat:'contas',    date:'2026-03-13'},
-    {id:39, who:'Filipe',  desc:'Conveniência Coworking',      val:22,     cat:'alim-fora', date:'2026-03-13'},
-    {id:40, who:'Filipe',  desc:'Farmácia',                    val:28.06,  cat:'saude',     date:'2026-03-14'},
-    {id:41, who:'Filipe',  desc:'Vivo',                        val:101.19, cat:'contas',    date:'2026-03-14'},
-    {id:42, who:'Filipe',  desc:'Estacionamento Coworking',    val:323,    cat:'transp',    date:'2026-03-14'},
-    {id:43, who:'Filipe',  desc:'Mercadinho Coworking',        val:18,     cat:'alim-merc', date:'2026-03-15'},
-    {id:44, who:'Filipe',  desc:'Marmita',                     val:30,     cat:'alim-fora', date:'2026-03-15'},
-    {id:45, who:'Filipe',  desc:'Papelaria',                   val:10,     cat:'outros',    date:'2026-03-15'},
-    {id:46, who:'Filipe',  desc:'Meu pai',                     val:50,     cat:'familia',   date:'2026-03-15'},
-    {id:47, who:'Filipe',  desc:'Assb Comércio',               val:4.99,   cat:'outros',    date:'2026-03-15'},
-    {id:48, who:'Filipe',  desc:'Marmita Anima',               val:22,     cat:'alim-fora', date:'2026-03-16'},
-    {id:49, who:'Filipe',  desc:'Sacolão',                     val:63.03,  cat:'alim-merc', date:'2026-03-16'},
-    {id:50, who:'Filipe',  desc:'Posto',                       val:150,    cat:'transp',    date:'2026-03-16'},
-    {id:51, who:'Filipe',  desc:'Drogaria SP',                 val:70.96,  cat:'saude',     date:'2026-03-16'},
-    {id:52, who:'Filipe',  desc:'Negociação PicPay',           val:11.57,  cat:'pgto',      date:'2026-03-17'},
-    {id:53, who:'Filipe',  desc:'Claro TV',                    val:197.87, cat:'contas',    date:'2026-03-17'},
-    {id:54, who:'Filipe',  desc:'Padaria',                     val:116.5,  cat:'alim-merc', date:'2026-03-17'},
-    {id:55, who:'Filipe',  desc:"McDonald's",                  val:142.40, cat:'alim-fora', date:'2026-03-17'},
-    {id:56, who:'Filipe',  desc:'Posto',                       val:310.39, cat:'transp',    date:'2026-03-17'},
-    {id:57, who:'Filipe',  desc:'Mercado',                     val:150.06, cat:'alim-merc', date:'2026-03-18'},
-    {id:58, who:'Filipe',  desc:'Marmita',                     val:35.50,  cat:'alim-fora', date:'2026-03-18'},
-    {id:59, who:'Filipe',  desc:'Drogaria SP',                 val:75.77,  cat:'saude',     date:'2026-03-18'},
-    {id:60, who:'Filipe',  desc:'Drogaria SP',                 val:8.99,   cat:'saude',     date:'2026-03-18'},
-    {id:61, who:'Filipe',  desc:'Pagamento Nubank',            val:103.62, cat:'pgto',      date:'2026-03-18'},
-    {id:62, who:'Filipe',  desc:'Burger King',                 val:119.70, cat:'alim-fora', date:'2026-03-18'},
-    {id:63, who:'Filipe',  desc:'Casa de Carnes',              val:9.44,   cat:'alim-fora', date:'2026-03-18'},
-    {id:64, who:'Filipe',  desc:'GETMO reembolso',             val:-100,   cat:'pgto',      date:'2026-03-18'},
-    {id:65, who:'Filipe',  desc:'Padaria',                     val:36.4,   cat:'alim-merc', date:'2026-03-18'},
-    {id:66, who:'Filipe',  desc:'Marmita',                     val:32.4,   cat:'alim-fora', date:'2026-03-18'},
-    {id:67, who:'Filipe',  desc:'Farmácia',                    val:30.90,  cat:'saude',     date:'2026-03-18'},
-    {id:68, who:'Filipe',  desc:'São Caetano do Sul (?)',      val:39.80,  cat:'outros',    date:'2026-03-18'},
-    {id:69, who:'Filipe',  desc:'Smarche (mercado)',           val:16.90,  cat:'alim-merc', date:'2026-03-18'},
-    {id:70, who:'Filipe',  desc:'Mercado',                     val:100.79, cat:'alim-merc', date:'2026-03-18'},
-    {id:71, who:'Filipe',  desc:'Padaria',                     val:18.13,  cat:'alim-merc', date:'2026-03-18'},
-    {id:72, who:'Filipe',  desc:'Sacolão',                     val:123.65, cat:'alim-merc', date:'2026-03-18'},
-    {id:73, who:'Filipe',  desc:'Joanin (mercado)',            val:47.43,  cat:'alim-merc', date:'2026-03-18'},
-    {id:74, who:'Filipe',  desc:'Almoco Anima',                val:72.80,  cat:'alim-fora', date:'2026-03-18'},
-    {id:75, who:'Filipe',  desc:'Farmácia',                    val:175.69, cat:'saude',     date:'2026-03-18'},
-    {id:76, who:'Filipe',  desc:'Farmácia',                    val:35.58,  cat:'saude',     date:'2026-03-18'},
-    {id:77, who:'Filipe',  desc:'Mercadinho Coworking',        val:10.50,  cat:'alim-merc', date:'2026-03-18'},
-    {id:78, who:'Filipe',  desc:'Crédito Shopee',              val:80.80,  cat:'pgto',      date:'2026-03-18'},
-    {id:79, who:'Filipe',  desc:'Estacionamento PSC',          val:17,     cat:'transp',    date:'2026-03-18'},
-    {id:80, who:'Filipe',  desc:'Mercado',                     val:33.78,  cat:'alim-merc', date:'2026-03-18'},
-    {id:81, who:'Filipe',  desc:'Vivo',                        val:278.36, cat:'contas',    date:'2026-03-18'},
-    {id:82, who:'Filipe',  desc:'Esfiha',                      val:89.64,  cat:'alim-fora', date:'2026-03-18'},
-    {id:83, who:'Filipe',  desc:'São Caetano do Sul (?)',      val:41.70,  cat:'outros',    date:'2026-03-18'},
-    {id:84, who:'Filipe',  desc:'Uber (Bento)',                val:13.96,  cat:'transp',    date:'2026-03-18'},
-    {id:85, who:'Filipe',  desc:'Acordo Anhanguera',           val:210,    cat:'educ',      date:'2026-03-18'},
-    {id:86, who:'Filipe',  desc:'Mercadinho Coworking',        val:7,      cat:'alim-merc', date:'2026-03-18'},
-    {id:87, who:'Filipe',  desc:'Padaria Monte Alto',          val:47.25,  cat:'alim-merc', date:'2026-03-18'},
-    {id:88, who:'Filipe',  desc:"Ifood McDonald's",            val:118,    cat:'alim-fora', date:'2026-03-18'},
-    {id:89, who:'Filipe',  desc:'Mercadinho Hotel',            val:47.45,  cat:'alim-merc', date:'2026-03-18'},
-    {id:90, who:'Filipe',  desc:'Estacionamento Hotel',        val:40,     cat:'transp',    date:'2026-03-18'},
-    {id:91, who:'Filipe',  desc:'Barbearia',                   val:110,    cat:'pessoal',   date:'2026-03-18'},
-    {id:92, who:'Filipe',  desc:'Swift',                       val:97.50,  cat:'alim-merc', date:'2026-03-18'},
-    {id:93, who:'Filipe',  desc:'Joanin (mercado)',            val:13.99,  cat:'alim-merc', date:'2026-03-18'},
-    {id:94, who:'Filipe',  desc:'Pastel',                      val:89,     cat:'alim-fora', date:'2026-03-18'},
-    {id:95, who:'Filipe',  desc:'Hostinger',                   val:57.22,  cat:'contas',    date:'2026-03-18'},
-    {id:96, who:'Filipe',  desc:'Marmita',                     val:33.90,  cat:'alim-fora', date:'2026-03-18'},
-    {id:97, who:'Filipe',  desc:'Uber pra vir hoje',           val:16.93,  cat:'transp',    date:'2026-03-18'},
-    {id:98, who:'Filipe',  desc:'Carro lavar',                 val:85,     cat:'transp',    date:'2026-03-18'},
-    {id:99, who:'Filipe',  desc:'Pai',                         val:17,     cat:'familia',   date:'2026-03-18'},
-    {id:100,who:'Beatriz', desc:'Amanda',                      val:210,    cat:'pessoal',   date:'2026-03-10'}
-  ],
-  nextId: 101
-};
+var categories = [
+  {id:'alim-merc', name:'Mercados & Padarias',     color:'#1D9E75', limit:1500},
+  {id:'alim-fora', name:'Comida fora de casa',      color:'#0F6E56', limit:500},
+  {id:'saude',     name:'Saúde & Farmácia',         color:'#D85A30', limit:800},
+  {id:'transp',    name:'Transporte & Combustível', color:'#2563eb', limit:800},
+  {id:'educ',      name:'Educação & Escola',        color:'#7F77DD', limit:1600},
+  {id:'bebe',      name:'Bebê & Filhos',            color:'#D4537E', limit:900},
+  {id:'contas',    name:'Contas & Serviços',        color:'#888780', limit:1100},
+  {id:'pgto',      name:'Pagamentos & Crédito',     color:'#c97c1a', limit:400},
+  {id:'pessoal',   name:'Pessoal & Serviços',       color:'#639922', limit:900},
+  {id:'familia',   name:'Família',                  color:'#c53030', limit:200},
+  {id:'outros',    name:'Outros',                   color:'#5DCAA5', limit:300}
+];
 
-var state;
-function loadState() {
+var expenses = [];
+
+function loadCategories() {
   try {
-    var raw = localStorage.getItem('paronetto-green-v2');
-    state = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultState));
-  } catch(e) { state = JSON.parse(JSON.stringify(defaultState)); }
+    var raw = localStorage.getItem('pg-categories-v1');
+    if (raw) categories = JSON.parse(raw);
+  } catch(e) {}
 }
-function saveState() {
-  try { localStorage.setItem('paronetto-green-v2', JSON.stringify(state)); } catch(e) {}
+function saveCategories() {
+  try { localStorage.setItem('pg-categories-v1', JSON.stringify(categories)); } catch(e) {}
+}
+
+function setSyncing(on) {
+  var dot = document.getElementById('sync-dot');
+  var lbl = document.getElementById('sync-label');
+  if (on) { dot.classList.add('syncing'); lbl.textContent = 'sync...'; }
+  else     { dot.classList.remove('syncing'); lbl.textContent = 'ok'; }
+}
+
+async function fetchExpenses() {
+  setSyncing(true);
+  try {
+    var key = getMonthKey();
+    var from = key + '-01';
+    var to   = key + '-31';
+    var res = await fetch(
+      SUPABASE_URL + '/rest/v1/expenses?date=gte.' + from + '&date=lte.' + to + '&order=id.asc',
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+    );
+    if (res.ok) {
+      expenses = await res.json();
+      renderAll();
+    }
+  } catch(e) { showToast('Erro ao buscar dados'); }
+  setSyncing(false);
+}
+
+async function insertExpense(exp) {
+  var res = await fetch(SUPABASE_URL + '/rest/v1/expenses', {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(exp)
+  });
+  if (!res.ok) throw new Error('Erro ao salvar');
+  return await res.json();
 }
 
 function fmt(v) {
   return 'R$ ' + parseFloat(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
 }
 function catById(id) {
-  return state.categories.find(function(c){ return c.id===id; }) || {name:id, color:'#888', limit:0};
+  return categories.find(function(c){ return c.id===id; }) || {name:id, color:'#888', limit:0};
 }
-
 function getMonthKey() {
   return currentYear + '-' + String(currentMonth+1).padStart(2,'0');
 }
-
-function filteredExpenses() {
-  var key = getMonthKey();
-  return state.expenses.filter(function(e){ return e.date && e.date.substring(0,7) === key; });
-}
-
 function totalByCat(catId) {
-  return filteredExpenses().filter(function(e){ return e.cat===catId; }).reduce(function(s,e){ return s+e.val; },0);
+  return expenses.filter(function(e){ return e.cat===catId; }).reduce(function(s,e){ return s+parseFloat(e.val); },0);
 }
 function totalByWho(who) {
-  return filteredExpenses().filter(function(e){ return e.who===who; }).reduce(function(s,e){ return s+e.val; },0);
+  return expenses.filter(function(e){ return e.who===who; }).reduce(function(s,e){ return s+parseFloat(e.val); },0);
 }
-
 function updateMonthLabel() {
   document.getElementById('month-label').textContent = MONTHS[currentMonth] + ' ' + currentYear;
 }
-
 function changeMonth(dir) {
   currentMonth += dir;
   if (currentMonth > 11) { currentMonth = 0; currentYear++; }
   if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
   updateMonthLabel();
-  renderAll();
+  fetchExpenses();
 }
-
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
@@ -451,26 +349,22 @@ function showPage(id, btn) {
   btn.classList.add('active');
   renderAll();
 }
-
 function setWho(who) {
   selectedWho = who;
   document.getElementById('who-filipe').classList.toggle('active', who==='Filipe');
   document.getElementById('who-beatriz').classList.toggle('active', who==='Beatriz');
 }
-
 function showToast(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
 }
-
 function renderAll() { renderDash(); renderBudget(); renderReport(); }
 
 function renderDash() {
-  var exps = filteredExpenses();
-  var total = exps.reduce(function(s,e){ return s+e.val; },0);
-  var totalLimit = state.categories.reduce(function(s,c){ return s+c.limit; },0);
+  var total = expenses.reduce(function(s,e){ return s+parseFloat(e.val); },0);
+  var totalLimit = categories.reduce(function(s,c){ return s+c.limit; },0);
   var pct = totalLimit>0 ? Math.round(total/totalLimit*100) : 0;
   var cls = pct>=100?'danger':pct>=80?'warn':'good';
   var restante = totalLimit - total;
@@ -488,7 +382,7 @@ function renderDash() {
     '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(totalByWho('Beatriz'))+'</div></div>';
 
   var alerts='';
-  state.categories.forEach(function(c){
+  categories.forEach(function(c){
     var spent=totalByCat(c.id);
     if(spent===0) return;
     var p=c.limit>0?spent/c.limit:0;
@@ -497,7 +391,7 @@ function renderDash() {
   });
   document.getElementById('dash-alerts').innerHTML=alerts;
 
-  var sorted=state.categories.slice().sort(function(a,b){ return totalByCat(b.id)-totalByCat(a.id); });
+  var sorted=categories.slice().sort(function(a,b){ return totalByCat(b.id)-totalByCat(a.id); });
   var catsHtml='';
   sorted.forEach(function(c){
     var spent=totalByCat(c.id);
@@ -510,17 +404,17 @@ function renderDash() {
   });
   document.getElementById('dash-cats').innerHTML=catsHtml||'<div class="empty">Nenhum gasto em '+MONTHS[currentMonth]+'</div>';
 
-  var recent=exps.slice().sort(function(a,b){ return b.id-a.id; }).slice(0,6);
+  var recent=expenses.slice().reverse().slice(0,6);
   var recentHtml=recent.map(function(e){
     var c=catById(e.cat);
-    return '<div class="exp-item"><div class="exp-left"><span class="exp-name">'+e.desc+'</span><span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+'</span></div><span class="exp-val'+(e.val<0?' negative':'')+'">'+fmt(e.val)+'</span></div>';
+    return '<div class="exp-item"><div class="exp-left"><span class="exp-name">'+e.desc+'</span><span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+'</span></div><span class="exp-val'+(parseFloat(e.val)<0?' negative':'')+'">'+fmt(e.val)+'</span></div>';
   }).join('');
   document.getElementById('dash-recent').innerHTML=recentHtml||'<div class="empty">Nenhum lançamento em '+MONTHS[currentMonth]+'</div>';
 }
 
 function renderBudget() {
   var html='';
-  state.categories.forEach(function(c){
+  categories.forEach(function(c){
     var spent=totalByCat(c.id);
     html+='<div class="budget-item"><div class="budget-dot" style="background:'+c.color+'"></div><span class="budget-name">'+c.name+'</span><span class="budget-spent">'+fmt(spent)+'</span><input class="budget-input" type="number" value="'+c.limit+'" onchange="updateLimit(\''+c.id+'\',this.value)"></div>';
   });
@@ -528,8 +422,8 @@ function renderBudget() {
 }
 
 function updateLimit(id,val){
-  var c=state.categories.find(function(c){ return c.id===id; });
-  if(c){ c.limit=parseFloat(val)||0; saveState(); showToast('Limite atualizado'); }
+  var c=categories.find(function(c){ return c.id===id; });
+  if(c){ c.limit=parseFloat(val)||0; saveCategories(); showToast('Limite atualizado'); renderAll(); }
 }
 
 function addCategory(){
@@ -537,43 +431,51 @@ function addCategory(){
   var limit=parseFloat(document.getElementById('new-cat-limit').value)||0;
   var color=document.getElementById('new-cat-color').value;
   if(!name){ showToast('Digite um nome'); return; }
-  state.categories.push({id:'cat-'+Date.now(), name:name, color:color, limit:limit});
+  categories.push({id:'cat-'+Date.now(), name:name, color:color, limit:limit});
   document.getElementById('new-cat-name').value='';
   document.getElementById('new-cat-limit').value='';
-  saveState(); populateCatSelect(); renderAll();
+  saveCategories(); populateCatSelect(); renderAll();
   showToast('Categoria adicionada');
 }
 
 function populateCatSelect(){
   var sel=document.getElementById('inp-cat');
   if(!sel) return;
-  sel.innerHTML=state.categories.map(function(c){ return '<option value="'+c.id+'">'+c.name+'</option>'; }).join('');
+  sel.innerHTML=categories.map(function(c){ return '<option value="'+c.id+'">'+c.name+'</option>'; }).join('');
 }
 
-function addExpense(){
+async function addExpense(){
   var desc=document.getElementById('inp-desc').value.trim();
   var val=parseFloat(document.getElementById('inp-val').value);
   var cat=document.getElementById('inp-cat').value;
   var date=document.getElementById('inp-date').value;
   if(!desc||!val||!date){ showToast('Preencha todos os campos'); return; }
-  state.expenses.push({id:state.nextId++, who:selectedWho, desc:desc, val:val, cat:cat, date:date});
-  saveState();
-  document.getElementById('inp-desc').value='';
-  document.getElementById('inp-val').value='';
-  showToast('Gasto registrado');
-  showPage('dash', document.querySelector('nav button'));
+  var btn=document.getElementById('btn-add');
+  btn.textContent='Salvando...'; btn.disabled=true;
+  setSyncing(true);
+  try {
+    var newExp = {who:selectedWho, desc:desc, val:val, cat:cat, date:date};
+    var result = await insertExpense(newExp);
+    expenses = expenses.concat(result);
+    document.getElementById('inp-desc').value='';
+    document.getElementById('inp-val').value='';
+    showToast('Gasto registrado!');
+    showPage('dash', document.querySelector('nav button'));
+    renderAll();
+  } catch(e) {
+    showToast('Erro ao salvar. Tente novamente.');
+  }
+  btn.textContent='Registrar gasto'; btn.disabled=false;
+  setSyncing(false);
 }
 
 function renderReport(){
-  var exps=filteredExpenses();
-  var total=exps.reduce(function(s,e){ return s+e.val; },0);
-  var filipe=totalByWho('Filipe');
-  var beatriz=totalByWho('Beatriz');
+  var total=expenses.reduce(function(s,e){ return s+parseFloat(e.val); },0);
   document.getElementById('rep-metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Total</div><div class="metric-value">'+fmt(total)+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Lançamentos</div><div class="metric-value good">'+exps.length+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(filipe)+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(beatriz)+'</div></div>';
+    '<div class="metric"><div class="metric-label">Lançamentos</div><div class="metric-value good">'+expenses.length+'</div></div>'+
+    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(totalByWho('Filipe'))+'</div></div>'+
+    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(totalByWho('Beatriz'))+'</div></div>';
 
   var html='';
   ['Filipe','Beatriz'].forEach(function(who){
@@ -581,8 +483,8 @@ function renderReport(){
     if(whoTotal===0) return;
     var initials=who==='Filipe'?'FP':'BP';
     html+='<div class="rep-person-block"><div class="rep-person-name"><div class="rep-person-avatar">'+initials+'</div>'+who+'</div>';
-    state.categories.forEach(function(c){
-      var v=exps.filter(function(e){ return e.cat===c.id&&e.who===who; }).reduce(function(s,e){ return s+e.val; },0);
+    categories.forEach(function(c){
+      var v=expenses.filter(function(e){ return e.cat===c.id&&e.who===who; }).reduce(function(s,e){ return s+parseFloat(e.val); },0);
       if(v!==0) html+='<div class="rep-row"><span class="rep-label">'+c.name+'</span><span class="rep-val">'+fmt(v)+'</span></div>';
     });
     html+='</div>';
@@ -590,40 +492,40 @@ function renderReport(){
   });
   document.getElementById('rep-person').innerHTML=html||'<div class="empty">Sem dados em '+MONTHS[currentMonth]+'</div>';
 
-  var all=exps.slice().sort(function(a,b){ return b.val-a.val; });
+  var all=expenses.slice().sort(function(a,b){ return parseFloat(b.val)-parseFloat(a.val); });
   var allHtml=all.map(function(e){
     var c=catById(e.cat);
-    return '<div class="exp-item"><div class="exp-left"><span class="exp-name">'+e.desc+'</span><span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+' · '+c.name+'</span></div><span class="exp-val'+(e.val<0?' negative':'')+'">'+fmt(e.val)+'</span></div>';
+    return '<div class="exp-item"><div class="exp-left"><span class="exp-name">'+e.desc+'</span><span class="exp-meta"><span class="exp-cat-dot" style="background:'+c.color+'"></span>'+e.who+' · '+e.date+' · '+c.name+'</span></div><span class="exp-val'+(parseFloat(e.val)<0?' negative':'')+'">'+fmt(e.val)+'</span></div>';
   }).join('');
   document.getElementById('rep-all').innerHTML=allHtml||'<div class="empty">Sem lançamentos em '+MONTHS[currentMonth]+'</div>';
 }
 
 function exportCSV(){
-  var exps=filteredExpenses().slice().sort(function(a,b){ return a.date.localeCompare(b.date); });
-  if(exps.length===0){ showToast('Nenhum lançamento neste mês'); return; }
+  if(expenses.length===0){ showToast('Nenhum lançamento neste mês'); return; }
+  var sorted=expenses.slice().sort(function(a,b){ return a.date.localeCompare(b.date); });
   var lines=['\uFEFFData;Descrição;Quem;Categoria;Valor (R$)'];
-  exps.forEach(function(e){
+  sorted.forEach(function(e){
     var c=catById(e.cat);
     var val=parseFloat(e.val).toFixed(2).replace('.',',');
-    lines.push([e.date, e.desc, e.who, c.name, val].join(';'));
+    lines.push([e.date,e.desc,e.who,c.name,val].join(';'));
   });
-  var total=exps.reduce(function(s,e){ return s+e.val; },0);
+  var total=expenses.reduce(function(s,e){ return s+parseFloat(e.val); },0);
   lines.push(';;;Total;'+total.toFixed(2).replace('.',','));
   var blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
   var url=URL.createObjectURL(blob);
   var a=document.createElement('a');
-  a.href=url;
-  a.download='extrato-'+MONTHS[currentMonth]+'-'+currentYear+'.csv';
-  a.click();
+  a.href=url; a.download='extrato-'+MONTHS[currentMonth]+'-'+currentYear+'.csv'; a.click();
   URL.revokeObjectURL(url);
   showToast('Extrato exportado!');
 }
 
 document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
-loadState();
+loadCategories();
 populateCatSelect();
 updateMonthLabel();
-renderAll();
+fetchExpenses();
+
+setInterval(fetchExpenses, 30000);
 </script>
 </body>
 </html>
