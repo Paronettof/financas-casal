@@ -262,18 +262,55 @@ var currentMonth = new Date().getMonth();
 var MONTHS = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
 
 var categories = [];
-
 var expenses = [];
 
-function loadCategories() {
+async function fetchCategories() {
   try {
-    var raw = localStorage.getItem('pg-categories-v1');
-    if (raw) categories = JSON.parse(raw);
-  } catch(e) {}
+    var res = await fetch(SUPABASE_URL + '/rest/v1/categories?order=name.asc', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) {
+      categories = await res.json();
+      populateCatSelect();
+      renderAll();
+    }
+  } catch(e) { showToast('Erro ao buscar categorias'); }
 }
-function saveCategories() {
-  try { localStorage.setItem('pg-categories-v1', JSON.stringify(categories)); } catch(e) {}
+
+async function insertCategory(cat) {
+  var res = await fetch(SUPABASE_URL + '/rest/v1/categories', {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(cat)
+  });
+  if (!res.ok) throw new Error('Erro ao salvar categoria');
+  return await res.json();
 }
+
+async function deleteCategDB(id) {
+  var res = await fetch(SUPABASE_URL + '/rest/v1/categories?id=eq.' + encodeURIComponent(id), {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  });
+  if (!res.ok) throw new Error('Erro ao deletar');
+}
+
+async function updateLimitDB(id, limit) {
+  var res = await fetch(SUPABASE_URL + '/rest/v1/categories?id=eq.' + encodeURIComponent(id), {
+    method: 'PATCH',
+    headers: {
+      'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ limit: limit })
+  });
+  if (!res.ok) throw new Error('Erro ao atualizar limite');
+}
+
+function saveCategories() {}
 
 function setSyncing(on) {
   var dot = document.getElementById('sync-dot');
@@ -422,28 +459,41 @@ function renderBudget() {
   document.getElementById('budget-list').innerHTML=html;
 }
 
-function deleteCategory(id){
+async function deleteCategory(id){
   if(!confirm('Deletar esta categoria? Os gastos vinculados a ela não serão apagados.')) return;
-  categories = categories.filter(function(c){ return c.id!==id; });
-  saveCategories(); populateCatSelect(); renderAll();
-  showToast('Categoria removida');
+  setSyncing(true);
+  try {
+    await deleteCategDB(id);
+    await fetchCategories();
+    showToast('Categoria removida');
+  } catch(e) { showToast('Erro ao deletar categoria'); }
+  setSyncing(false);
 }
 
-function updateLimit(id,val){
+async function updateLimit(id,val){
+  var limit = parseFloat(val)||0;
   var c=categories.find(function(c){ return c.id===id; });
-  if(c){ c.limit=parseFloat(val)||0; saveCategories(); showToast('Limite atualizado'); renderAll(); }
+  if(c){ c.limit=limit; renderAll(); }
+  try {
+    await updateLimitDB(id, limit);
+    showToast('Limite atualizado');
+  } catch(e) { showToast('Erro ao atualizar limite'); }
 }
 
-function addCategory(){
+async function addCategory(){
   var name=document.getElementById('new-cat-name').value.trim();
   var limit=parseFloat(document.getElementById('new-cat-limit').value)||0;
   var color=document.getElementById('new-cat-color').value;
   if(!name){ showToast('Digite um nome'); return; }
-  categories.push({id:'cat-'+Date.now(), name:name, color:color, limit:limit});
-  document.getElementById('new-cat-name').value='';
-  document.getElementById('new-cat-limit').value='';
-  saveCategories(); populateCatSelect(); renderAll();
-  showToast('Categoria adicionada');
+  var btn = document.getElementById('btn-add-cat') || document.querySelector('#budget .btn-submit');
+  try {
+    var newCat = {id:'cat-'+Date.now(), name:name, color:color, limit:limit};
+    await insertCategory(newCat);
+    document.getElementById('new-cat-name').value='';
+    document.getElementById('new-cat-limit').value='';
+    await fetchCategories();
+    showToast('Categoria adicionada');
+  } catch(e) { showToast('Erro ao salvar categoria'); }
 }
 
 function populateCatSelect(){
@@ -603,9 +653,8 @@ async function handleOCR(input) {
 }
 
 document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
-loadCategories();
-populateCatSelect();
 updateMonthLabel();
+fetchCategories();
 fetchExpenses();
 
 setInterval(fetchExpenses, 30000);
