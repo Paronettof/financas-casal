@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paronetto's Green</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0F6E56">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PG Finanças">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -780,7 +785,7 @@ async function addCategory(){
   if(!name){ showToast('Digite um nome'); return; }
   var btn = document.getElementById('btn-add-cat') || document.querySelector('#budget .btn-submit');
   try {
-    var newCat = {id:'cat-'+Date.now(), name:name, color:color, limit:limit};
+    var newCat = {id:'cat-'+Date.now(), name:name, color:color, limit:limit, user_id:_session.user.id};
     await insertCategory(newCat);
     document.getElementById('new-cat-name').value='';
     document.getElementById('new-cat-limit').value='';
@@ -805,7 +810,7 @@ async function addExpense(){
   btn.textContent='Salvando...'; btn.disabled=true;
   setSyncing(true);
   try {
-    var newExp = {who:selectedWho, desc:desc, val:val, cat:cat, date:date};
+    var newExp = {who:selectedWho, desc:desc, val:val, cat:cat, date:date, user_id:_session.user.id};
     var result = await insertExpense(newExp);
     expenses = expenses.concat(result);
     document.getElementById('inp-desc').value='';
@@ -951,6 +956,10 @@ document.getElementById('inp-date').value=new Date().toISOString().split('T')[0]
 updateMonthLabel();
 
 setInterval(function(){ if(_session) fetchExpenses(); }, 30000);
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(function(){});
+}
 </script>
 </body>
 </html>
