@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piggy Green — Controle financeiro familiar</title>
+<meta name="description" content="Registre gastos com foto da nota fiscal, acompanhe por categoria e mantenha as finanças da família sob controle. Individual, casal ou família — do seu jeito.">
+<meta property="og:title" content="Piggy Green — Controle financeiro familiar">
+<meta property="og:description" content="Registre gastos com foto da nota fiscal, acompanhe por categoria e mantenha as finanças da família sob controle.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A5940">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f7f3;
+  --surface: #ffffff;
+  --green-950: #052e1c;
+  --green-900: #0A3D26;
+  --green-800: #0A5940;
+  --green-700: #0F6E56;
+  --green-500: #1D9E75;
+  --green-400: #2EBD8E;
+  --green-200: #a8e6cc;
+  --green-100: #d6f0e6;
+  --green-50:  #edf8f3;
+  --text: #0d2b20;
+  --text2: #3d6b55;
+  --text3: #7aab8e;
+  --amber: #d97706;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 24px rgba(10,89,64,0.10);
+  --shadow-lg: 0 12px 48px rgba(10,89,64,0.16);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,57,38,0.96); backdrop-filter: blur(12px);
+  padding: 0 24px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+.nav-pig { width: 34px; height: 34px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.nav-logo span { color: var(--green-200); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.15s; }
+.nav-links a:hover { color: #fff; }
+.btn-nav { background: var(--green-400); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; transition: all 0.15s; border: none; cursor: pointer; }
+.btn-nav:hover { background: #38d4a4; transform: translateY(-1px); }
+.nav-mobile-cta { display: none; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--green-900) 0%, var(--green-800) 60%, #0e7a5a 100%);
+  padding: 80px 24px 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: var(--green-200); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px; }
+.hero-pig { font-size: 72px; margin-bottom: 16px; display: block; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -1px; margin-bottom: 20px; }
+.hero h1 em { font-style: normal; color: var(--green-200); }
+.hero p { font-size: clamp(16px, 2.5vw, 20px); color: rgba(255,255,255,0.72); max-width: 520px; margin: 0 auto 36px; font-weight: 400; }
+.hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--green-400); color: #fff; padding: 14px 28px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+.btn-primary:hover { background: #38d4a4; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,189,142,0.4); }
+.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; padding: 14px 28px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; border: 1px solid rgba(255,255,255,0.2); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.btn-secondary:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+.hero-note { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.45); }
+.hero-mockup { margin-top: 56px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg); padding: 24px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.mockup-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mockup-card { background: rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
+.mockup-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(168,230,204,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.mockup-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+.mockup-val { font-size: 18px; font-weight: 700; color: #fff; font-family: 'DM Mono', monospace; }
+.mockup-bar2 { background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; margin-top: 6px; overflow: hidden; }
+.mockup-fill { height: 6px; border-radius: 4px; }
+
+/* ── SECTIONS ── */
+section { padding: 80px 24px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-tag { display: inline-block; background: var(--green-100); color: var(--green-700); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+.section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 700; color: var(--text); letter-spacing: -0.5px; margin-bottom: 12px; }
+.section-sub { font-size: 17px; color: var(--text2); max-width: 560px; }
+.section-header { margin-bottom: 52px; }
+.section-header.center { text-align: center; }
+.section-header.center .section-sub { margin: 0 auto; }
+
+/* ── SOCIAL PROOF BAR ── */
+.proof-bar { background: var(--green-50); border-top: 1px solid var(--green-100); border-bottom: 1px solid var(--green-100); padding: 18px 24px; }
+.proof-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.proof-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--text2); }
+.proof-item strong { color: var(--green-700); font-size: 18px; font-weight: 700; }
+
+/* ── FEATURES ── */
+.features-bg { background: #fff; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.feat-card { background: var(--green-50); border: 1px solid var(--green-100); border-radius: var(--radius); padding: 28px; transition: all 0.2s; }
+.feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green-200); }
+.feat-icon { width: 52px; height: 52px; background: var(--green-100); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 18px; }
+.feat-card h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.feat-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+.feat-badge { display: inline-block; background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── HOW IT WORKS ── */
+.how-bg { background: linear-gradient(180deg, var(--green-900) 0%, var(--green-950) 100%); }
+.how-bg .section-tag { background: rgba(168,230,204,0.15); color: var(--green-200); }
+.how-bg .section-title { color: #fff; }
+.how-bg .section-sub { color: rgba(255,255,255,0.65); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; position: relative; }
+.steps::before { content: ''; position: absolute; top: 36px; left: 15%; right: 15%; height: 2px; background: linear-gradient(90deg, transparent, rgba(168,230,204,0.3), transparent); }
+.step { text-align: center; }
+.step-num { width: 72px; height: 72px; border-radius: 50%; background: rgba(168,230,204,0.12); border: 2px solid rgba(168,230,204,0.25); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; }
+.step-n { width: 24px; height: 24px; background: var(--green-400); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; margin: -12px auto 0; }
+.step h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.step p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 240px; margin: 0 auto; }
+
+/* ── MODES ── */
+.modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.mode-card { background: #fff; border: 2px solid var(--green-100); border-radius: var(--radius); padding: 28px 24px; text-align: center; transition: all 0.2s; position: relative; overflow: hidden; }
+.mode-card.featured { border-color: var(--green-500); }
+.mode-card.featured::before { content: 'Mais popular'; position: absolute; top: 14px; right: -24px; background: var(--green-500); color: #fff; font-size: 10px; font-weight: 700; padding: 4px 32px; transform: rotate(45deg); }
+.mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.mode-emoji { font-size: 48px; margin-bottom: 14px; }
+.mode-card h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.mode-card p { font-size: 14px; color: var(--text2); margin-bottom: 16px; }
+.mode-tag { display: inline-block; background: var(--green-50); color: var(--green-700); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 10px; }
+
+/* ── PRICING ── */
+.pricing-bg { background: #fff; }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start; }
+.price-card { background: var(--green-50); border: 2px solid var(--green-100); border-radius: var(--radius); padding: 32px 28px; transition: all 0.2s; }
+.price-card.featured { background: var(--green-800); border-color: var(--green-700); transform: scale(1.03); box-shadow: var(--shadow-lg); }
+.price-card:not(.featured):hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.price-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 8px; }
+.price-card.featured .price-label { color: var(--green-200); }
+.price-name { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+.price-card.featured .price-name { color: #fff; }
+.price-amount { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+.price-currency { font-size: 16px; font-weight: 600; color: var(--text2); }
+.price-value { font-size: 44px; font-weight: 700; color: var(--text); font-family: 'DM Mono', monospace; letter-spacing: -2px; line-height: 1; }
+.price-period { font-size: 14px; color: var(--text3); }
+.price-card.featured .price-currency,
+.price-card.featured .price-value { color: #fff; }
+.price-card.featured .price-period { color: rgba(255,255,255,0.55); }
+.price-trial { font-size: 12px; font-weight: 600; color: var(--green-500); background: var(--green-50); border-radius: 8px; padding: 4px 10px; display: inline-block; margin-bottom: 20px; }
+.price-card.featured .price-trial { background: rgba(255,255,255,0.1); color: var(--green-200); }
+.price-divider { height: 1px; background: var(--green-100); margin: 20px 0; }
+.price-card.featured .price-divider { background: rgba(255,255,255,0.1); }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.price-features li { font-size: 14px; color: var(--text2); display: flex; align-items: center; gap: 8px; }
+.price-card.featured .price-features li { color: rgba(255,255,255,0.8); }
+.price-features li::before { content: '✓'; color: var(--green-500); font-weight: 700; flex-shrink: 0; }
+.price-card.featured .price-features li::before { color: var(--green-200); }
+.btn-price { width: 100%; padding: 13px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; font-family: 'DM Sans', sans-serif; }
+.btn-price-outline { background: none; color: var(--green-700); border: 2px solid var(--green-200); }
+.btn-price-outline:hover { background: var(--green-100); }
+.btn-price-solid { background: var(--green-400); color: #fff; }
+.btn-price-solid:hover { background: #38d4a4; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(46,189,142,0.4); }
+.pricing-note { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text3); }
+
+/* ── TESTIMONIALS ── */
+.test-bg { background: var(--green-50); }
+.test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.test-card { background: #fff; border: 1px solid var(--green-100); border-radius: var(--radius); padding: 24px; }
+.test-stars { color: #f59e0b; font-size: 15px; margin-bottom: 12px; letter-spacing: 2px; }
+.test-text { font-size: 15px; color: var(--text); line-height: 1.65; margin-bottom: 18px; font-style: italic; }
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-100); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.test-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.test-role { font-size: 12px; color: var(--text3); }
+
+/* ── FAQ ── */
+.faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: #fff; border: 1px solid var(--green-100); border-radius: var(--radius-sm); overflow: hidden; }
+.faq-q { width: 100%; text-align: left; padding: 18px 20px; background: none; border: none; font-size: 15px; font-weight: 600; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+.faq-q:hover { background: var(--green-50); }
+.faq-arrow { color: var(--green-500); font-size: 18px; transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { display: none; padding: 0 20px 18px; font-size: 14px; color: var(--text2); line-height: 1.65; }
+.faq-item.open .faq-a { display: block; }
+
+/* ── CTA BAND ── */
+.cta-band { background: linear-gradient(135deg, var(--green-800), var(--green-900)); padding: 80px 24px; text-align: center; }
+.cta-band h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: -0.5px; }
+.cta-band p { font-size: 17px; color: rgba(255,255,255,0.65); margin-bottom: 32px; }
+.cta-band .btn-primary { font-size: 16px; padding: 16px 36px; }
+
+/* ── FOOTER ── */
+footer { background: var(--green-950); padding: 48px 24px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.footer-brand { }
+.footer-logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.footer-logo-pig { width: 34px; height: 34px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.footer-logo span { color: var(--green-200); }
+.footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); max-width: 240px; line-height: 1.6; }
+.footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 14px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col li a { font-size: 14px; color: rgba(255,255,255,0.6); transition: color 0.15s; }
+.footer-col li a:hover { color: #fff; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.35); transition: color 0.15s; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-mobile-cta { display: flex; }
+  .hero { padding: 60px 20px 72px; }
+  section { padding: 60px 20px; }
+  .modes-grid { grid-template-columns: 1fr; }
+  .mode-card.featured { transform: none; }
+  .price-card.featured { transform: none; }
+  .footer-top { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .steps::before { display: none; }
+}
+@media (max-width: 480px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-secondary { justify-content: center; }
+  .proof-inner { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-pig">🐷</div>
+    Piggy <span>Green</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Funcionalidades</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#precos">Preços</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://app.piggygreen.com.br" class="btn-nav">Começar grátis →</a>
+  </div>
+  <a href="https://app.piggygreen.com.br" class="btn-nav nav-mobile-cta">Começar grátis</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🚀 Novo · 30 dias grátis</div>
+    <span class="hero-pig">🐷</span>
+    <h1>Finanças da família<br><em>sem planilha, sem estresse</em></h1>
+    <p>Foto da nota, gasto registrado. Acompanhe por categoria, por pessoa e por mês — Individual, Casal ou Família.</p>
+    <div class="hero-ctas">
+      <a href="https://app.piggygreen.com.br" class="btn-primary">
+        Começar grátis por 30 dias →
+      </a>
+      <a href="#como-funciona" class="btn-secondary">
+        Ver como funciona
+      </a>
+    </div>
+    <p class="hero-note">Sem cartão de crédito. Cancele quando quiser.</p>
+
+    <div class="hero-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#ff5f57"></div>
+        <div class="mockup-dot" style="background:#febc2e"></div>
+        <div class="mockup-dot" style="background:#28c840"></div>
+        <span style="margin-left:8px;font-size:12px;color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;">junho 2026</span>
+      </div>
+      <div class="mockup-card">
+        <div class="mockup-icon">🛒</div>
+        <div style="flex:1">
+          <div class="mockup-label">Mercado</div>
+          <div class="mockup-val">R$ 1.240,00</div>
+          <div class="mockup-bar2"><div class="mockup-fill" style="width:82%;background:#2EBD8E"></div></div>
+        </div>
+        <div style="font-size:11px;color:#f59e0b;font-weight:600">82%</div>
+      </div>
+      <div class="mockup-card">
+        <div class="mockup-icon">⚡</div>
+        <div style="flex:1">
+          <div class="mockup-label">Contas</div>
+          <div class="mockup-val">R$ 620,00</div>
+          <div class="mockup-bar2"><div class="mockup-fill" style="width:55%;background:#2EBD8E"></div></div>
+        </div>
+        <div style="font-size:11px;color:#2EBD8E;font-weight:600">55%</div>
+      </div>
+      <div class="mockup-card">
+        <div class="mockup-icon">🎉</div>
+        <div style="flex:1">
+          <div class="mockup-label">Lazer</div>
+          <div class="mockup-val">R$ 390,00</div>
+          <div class="mockup-bar2"><div class="mockup-fill" style="width:39%;background:#2EBD8E"></div></div>
+        </div>
+        <div style="font-size:11px;color:#2EBD8E;font-weight:600">39%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-inner">
+    <div class="proof-item"><strong>30</strong> dias grátis</div>
+    <div class="proof-item"><strong>3</strong> modos de uso</div>
+    <div class="proof-item"><strong>OCR</strong> com IA</div>
+    <div class="proof-item"><strong>100%</strong> brasileiro</div>
+    <div class="proof-item"><strong>Sync</strong> em tempo real</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Funcionalidades</div>
+      <h2 class="section-title">Tudo que você precisa,<br>nada que você não usa</h2>
+      <p class="section-sub">Simples para quem nunca controlou finanças. Completo para quem leva a sério.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">📷</div>
+        <h3>OCR de nota fiscal</h3>
+        <p>Fotografe o cupom e a IA extrai valor, estabelecimento e data automaticamente. Sem digitar nada.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <h3>Sincronização em tempo real</h3>
+        <p>Você registra no celular e seu cônjuge vê na hora. Sem exportar, sem mandar arquivo, sem drama.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎯</div>
+        <h3>Orçamento por categoria</h3>
+        <p>Defina limites para Mercado, Lazer, Saúde… Alerta automático em 80% e 100% do limite.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <h3>Relatório por pessoa</h3>
+        <p>Veja quanto cada membro gastou e em quê. Perfeito para dividir as contas de forma justa.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📤</div>
+        <h3>Exportar para CSV</h3>
+        <p>Baixe o extrato do mês em CSV e abra no Excel ou Google Sheets para análises mais avançadas.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💬</div>
+        <h3>Registro via WhatsApp <span class="feat-badge">Em breve</span></h3>
+        <p>Mande uma mensagem para o Piggy no WhatsApp e ele registra o gasto pra você. Sem abrir o app.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona" class="how-bg">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">Como funciona</div>
+      <h2 class="section-title" style="color:#fff">Três passos e pronto</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.6)">Do cadastro ao primeiro gasto em menos de 2 minutos.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">👤</div>
+        <div class="step-n">1</div>
+        <h3>Crie sua conta</h3>
+        <p>Cadastre com e-mail ou entre com o Google. Escolha o modo: Individual, Casal ou Família.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">📋</div>
+        <div class="step-n">2</div>
+        <h3>Configure categorias</h3>
+        <p>Crie as categorias do seu jeito — Mercado, Saúde, Lazer — e defina um limite mensal para cada uma.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">📷</div>
+        <div class="step-n">3</div>
+        <h3>Registre com foto</h3>
+        <p>Fotografe a nota ou preencha manualmente. O painel atualiza na hora para toda a família.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section id="modos">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">Modos de uso</div>
+      <h2 class="section-title">Do seu jeito, no seu ritmo</h2>
+      <p class="section-sub">Um app, três configurações. Comece Individual e expanda quando quiser.</p>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card">
+        <div class="mode-emoji">🧍</div>
+        <h3>Individual</h3>
+        <p>Controle seus próprios gastos sem compartilhar com ninguém.</p>
+        <div class="mode-tag">1 pessoa</div>
+      </div>
+      <div class="mode-card featured">
+        <div class="mode-emoji">👫</div>
+        <h3>Casal</h3>
+        <p>Dois nomes, um painel. Veja quanto cada um gastou e em quê.</p>
+        <div class="mode-tag">2 pessoas</div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-emoji">👨‍👩‍👧</div>
+        <h3>Família</h3>
+        <p>Até 5 membros no mesmo painel. Ideal para famílias e repúblicas.</p>
+        <div class="mode-tag">Até 5 pessoas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="precos" class="pricing-bg">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">Preços</div>
+      <h2 class="section-title">30 dias grátis, sem cartão</h2>
+      <p class="section-sub">Escolha o plano ideal para você. Cancele a qualquer momento, sem fidelidade.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-label">Individual</div>
+        <div class="price-name">🧍 Solo</div>
+        <div class="price-amount">
+          <span class="price-currency">R$</span>
+          <span class="price-value">9</span>
+          <span class="price-period">,90/mês</span>
+        </div>
+        <div class="price-trial">✨ 30 dias grátis</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>1 usuário</li>
+          <li>Categorias ilimitadas</li>
+          <li>OCR de nota fiscal</li>
+          <li>Relatórios mensais</li>
+          <li>Exportar CSV</li>
+        </ul>
+        <a href="https://app.piggygreen.com.br">
+          <button class="btn-price btn-price-outline">Começar grátis</button>
+        </a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-label">Casal</div>
+        <div class="price-name" style="color:#fff">👫 Juntos</div>
+        <div class="price-amount">
+          <span class="price-currency">R$</span>
+          <span class="price-value">14</span>
+          <span class="price-period">,90/mês</span>
+        </div>
+        <div class="price-trial">✨ 30 dias grátis</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>2 membros</li>
+          <li>Categorias ilimitadas</li>
+          <li>OCR de nota fiscal</li>
+          <li>Relatório por pessoa</li>
+          <li>Sync em tempo real</li>
+          <li>Exportar CSV</li>
+        </ul>
+        <a href="https://app.piggygreen.com.br">
+          <button class="btn-price btn-price-solid">Começar grátis</button>
+        </a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-label">Família</div>
+        <div class="price-name">👨‍👩‍👧 Família</div>
+        <div class="price-amount">
+          <span class="price-currency">R$</span>
+          <span class="price-value">19</span>
+          <span class="price-period">,90/mês</span>
+        </div>
+        <div class="price-trial">✨ 30 dias grátis</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Até 5 membros</li>
+          <li>Categorias ilimitadas</li>
+          <li>OCR de nota fiscal</li>
+          <li>Relatório por pessoa</li>
+          <li>Sync em tempo real</li>
+          <li>Exportar CSV</li>
+          <li>Suporte prioritário</li>
+        </ul>
+        <a href="https://app.piggygreen.com.br">
+          <button class="btn-price btn-price-outline">Começar grátis</button>
+        </a>
+      </div>
+
+    </div>
+    <p class="pricing-note">Todos os planos incluem 30 dias de teste grátis · Sem fidelidade · Cancele quando quiser</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="test-bg">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">Depoimentos</div>
+      <h2 class="section-title">Quem já usa, não abre mão</h2>
+      <p class="section-sub">Famílias reais controlando o dinheiro de verdade.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"A foto da nota fiscal mudou tudo. Antes eu esquecia de anotar. Agora fotografo na saída do mercado e pronto. Em uma semana já vi onde estava gastando demais."</p>
+        <div class="test-author">
+          <div class="test-avatar">👩</div>
+          <div>
+            <div class="test-name">Ana C.</div>
+            <div class="test-role">Modo Casal · São Paulo, SP</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Minha esposa e eu sempre brigávamos por causa de dinheiro. Agora temos um painel compartilhado. Transparência total, discussão zero. Recomendo a todo casal."</p>
+        <div class="test-author">
+          <div class="test-avatar">🧔</div>
+          <div>
+            <div class="test-name">Marcos L.</div>
+            <div class="test-role">Modo Casal · Curitiba, PR</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Uso no modo Família com minha mãe e irmã. Cada uma registra o que comprou e no fim do mês a gente acerta as contas. Simples, rápido e sem confusão."</p>
+        <div class="test-author">
+          <div class="test-avatar">👧</div>
+          <div>
+            <div class="test-name">Julia R.</div>
+            <div class="test-role">Modo Família · Belo Horizonte, MG</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header center">
+      <div class="section-tag">FAQ</div>
+      <h2 class="section-title">Dúvidas frequentes</h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Precisa de cartão de crédito para testar?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Não. Os 30 dias de teste são 100% gratuitos e sem cadastro de cartão. Só pedimos um e-mail para criar sua conta.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Posso mudar de plano depois?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Sim. Você pode fazer upgrade ou downgrade a qualquer momento. Começou Individual e quer incluir seu cônjuge? É só mudar para o plano Casal.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Como funciona o OCR de nota fiscal?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Você fotografa o cupom fiscal e uma IA (Claude, da Anthropic) lê o valor total, o nome do estabelecimento e a data automaticamente. Você só confirma e salva.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Os dados são seguros?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Sim. Usamos o Supabase (infraestrutura de banco de dados com RLS — Row Level Security). Cada família acessa apenas seus próprios dados. Nenhum dado é compartilhado entre contas.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Funciona no celular?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Sim. O Piggy Green é um PWA (Progressive Web App) — você pode instalar direto pelo navegador do celular, sem precisar baixar pela App Store ou Google Play. No Safari (iOS) toque em "Compartilhar → Adicionar à Tela de Início".</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Como vai funcionar o registro via WhatsApp?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Em breve! A ideia é que você mande uma mensagem tipo "gastei 47 reais no mercado" e o Piggy registre automaticamente na categoria certa. Deixe seu e-mail e avisamos assim que estiver disponível.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Comece agora, de graça 🐷</h2>
+  <p>30 dias sem custo, sem cartão. Cancele quando quiser.</p>
+  <a href="https://app.piggygreen.com.br">
+    <button class="btn-primary">Criar minha conta grátis →</button>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-pig">🐷</div>
+          Piggy <span>Green</span>
+        </div>
+        <p class="footer-tagline">Controle financeiro familiar simples, bonito e que funciona de verdade.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="#features">Funcionalidades</a></li>
+          <li><a href="#precos">Preços</a></li>
+          <li><a href="#modos">Modos de uso</a></li>
+          <li><a href="https://app.piggygreen.com.br">Acessar o app</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:oi@piggygreen.com.br">Contato</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Piggy Green. Feito com 💚 no Brasil.</p>
+      <div class="footer-links">
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+        <a href="mailto:oi@piggygreen.com.br">Contato</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+
+// Intersection Observer para animações sutis
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feat-card, .step, .price-card, .test-card, .mode-card').forEach(function(el) {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
