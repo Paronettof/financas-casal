@@ -23,6 +23,26 @@
 .user-chip { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.12); border-radius:20px; padding:4px 10px 4px 4px; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; font-size:12px; color:#fff; }
 .user-chip:hover { background:rgba(255,255,255,0.2); }
 .user-avatar { width:24px; height:24px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff; }
+#onboarding-screen { position:fixed; inset:0; background:rgba(13,43,32,0.55); z-index:8888; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+#onboarding-screen.visible { display:flex; }
+.ob-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:28px; width:100%; max-width:400px; }
+.ob-title { font-size:18px; font-weight:600; color:var(--green-dark); margin-bottom:4px; }
+.ob-sub { font-size:13px; color:var(--text2); margin-bottom:22px; }
+.ob-step { display:none; }
+.ob-step.active { display:block; }
+.ob-modes { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.ob-mode { padding:16px 8px; border-radius:var(--radius-sm); border:2px solid var(--border2); background:var(--surface); cursor:pointer; text-align:center; transition:all 0.15s; }
+.ob-mode:hover { border-color:var(--green); background:var(--green-xlight); }
+.ob-mode.selected { border-color:var(--green-dark); background:var(--green-xlight); }
+.ob-mode-icon { font-size:28px; margin-bottom:6px; }
+.ob-mode-label { font-size:12px; font-weight:600; color:var(--text); }
+.ob-mode-desc { font-size:11px; color:var(--text3); margin-top:2px; }
+.ob-members { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.ob-member-row { display:flex; align-items:center; gap:10px; }
+.ob-member-emoji { font-size:20px; width:32px; text-align:center; }
+.ob-steps-indicator { display:flex; gap:6px; justify-content:center; margin-bottom:20px; }
+.ob-dot { width:6px; height:6px; border-radius:50%; background:var(--border2); }
+.ob-dot.active { background:var(--green-dark); }
 </style>
 <style>
 :root {
@@ -173,6 +193,46 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
   </div>
 </div>
 
+<div id="onboarding-screen">
+  <div class="ob-card">
+    <div class="ob-steps-indicator">
+      <div class="ob-dot active" id="ob-dot-1"></div>
+      <div class="ob-dot" id="ob-dot-2"></div>
+    </div>
+
+    <div class="ob-step active" id="ob-step-1">
+      <div class="ob-title">Bem-vindo! 🐷</div>
+      <div class="ob-sub">Como você vai usar o app?</div>
+      <div class="ob-modes">
+        <div class="ob-mode" id="ob-mode-individual" onclick="selectMode('individual')">
+          <div class="ob-mode-icon">🧍</div>
+          <div class="ob-mode-label">Individual</div>
+          <div class="ob-mode-desc">Só eu</div>
+        </div>
+        <div class="ob-mode selected" id="ob-mode-casal" onclick="selectMode('casal')">
+          <div class="ob-mode-icon">👫</div>
+          <div class="ob-mode-label">Casal</div>
+          <div class="ob-mode-desc">Eu e mais 1</div>
+        </div>
+        <div class="ob-mode" id="ob-mode-familia" onclick="selectMode('familia')">
+          <div class="ob-mode-icon">👨‍👩‍👧</div>
+          <div class="ob-mode-label">Família</div>
+          <div class="ob-mode-desc">Até 5 pessoas</div>
+        </div>
+      </div>
+      <button class="btn-submit" onclick="obNextStep()">Continuar →</button>
+    </div>
+
+    <div class="ob-step" id="ob-step-2">
+      <div class="ob-title">Quem vai registrar gastos?</div>
+      <div class="ob-sub">Você pode mudar isso depois nas configurações.</div>
+      <div class="ob-members" id="ob-members-list"></div>
+      <button class="btn-submit" onclick="saveOnboarding()">Começar →</button>
+      <button class="btn-outline" style="margin-top:8px;" onclick="obPrevStep()">← Voltar</button>
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="logo">
     <div class="logo-pig">🐷</div>
@@ -222,10 +282,7 @@ main { padding: 16px; max-width: 640px; margin: 0 auto; }
   <div style="height:14px;"></div>
   <div class="form-card">
     <div class="section-label" style="margin-top:0;">quem pagou</div>
-    <div class="who-toggle">
-      <button class="who-btn active" id="who-filipe" onclick="setWho('Filipe')">🧔 Filipe</button>
-      <button class="who-btn" id="who-beatriz" onclick="setWho('Beatriz')">👩 Beatriz</button>
-    </div>
+    <div class="who-toggle" id="who-toggle"></div>
 
     <input type="file" id="ocr-input" accept="image/*" capture="environment" style="display:none;" onchange="handleOCR(this)">
     <button class="btn-outline" style="margin-bottom:16px;margin-top:0;" onclick="document.getElementById('ocr-input').click()">
@@ -313,10 +370,95 @@ var SUPABASE_KEY = 'sb_publishable_oaxikaD0uILb1LxGjErRdw_vVWBit5m';
 
 var _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 var _session = null;
+var _profile = { mode: 'casal', members: ['Filipe', 'Beatriz'] };
+
+var MEMBER_EMOJIS = ['🧔','👩','🧒','👴','👵'];
 
 function getAuthHeaders() {
   var token = _session ? _session.access_token : SUPABASE_KEY;
   return { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + token };
+}
+
+// --- ONBOARDING ---
+var _obMode = 'casal';
+
+function selectMode(mode) {
+  _obMode = mode;
+  ['individual','casal','familia'].forEach(function(m) {
+    document.getElementById('ob-mode-'+m).classList.toggle('selected', m===mode);
+  });
+}
+
+function obNextStep() {
+  var counts = { individual:1, casal:2, familia:3 };
+  var n = counts[_obMode] || 2;
+  var defaults = { individual:['Eu'], casal:['Você','Parceiro(a)'], familia:['Você','Cônjuge','Filho(a)'] };
+  var list = document.getElementById('ob-members-list');
+  list.innerHTML = '';
+  for (var i=0; i<n; i++) {
+    var emoji = MEMBER_EMOJIS[i];
+    var def = defaults[_obMode][i] || 'Membro '+(i+1);
+    list.innerHTML += '<div class="ob-member-row"><span class="ob-member-emoji">'+emoji+'</span><input class="form-control" id="ob-m'+i+'" placeholder="'+def+'" value="'+(i===0&&_session?(_session.user.user_metadata.full_name||'').split(' ')[0]||def:def)+'"></div>';
+  }
+  if (_obMode === 'familia') {
+    list.innerHTML += '<button class="btn-outline" style="margin-top:4px;padding:8px;" onclick="obAddMember()">+ Adicionar pessoa</button>';
+  }
+  document.getElementById('ob-step-1').classList.remove('active');
+  document.getElementById('ob-step-2').classList.add('active');
+  document.getElementById('ob-dot-1').classList.remove('active');
+  document.getElementById('ob-dot-2').classList.add('active');
+}
+
+function obAddMember() {
+  var list = document.getElementById('ob-members-list');
+  var rows = list.querySelectorAll('.ob-member-row');
+  var i = rows.length;
+  if (i >= 5) return;
+  var emoji = MEMBER_EMOJIS[i] || '👤';
+  var newRow = document.createElement('div');
+  newRow.className = 'ob-member-row';
+  newRow.innerHTML = '<span class="ob-member-emoji">'+emoji+'</span><input class="form-control" id="ob-m'+i+'" placeholder="Membro '+(i+1)+'">';
+  list.insertBefore(newRow, list.lastElementChild);
+}
+
+function obPrevStep() {
+  document.getElementById('ob-step-2').classList.remove('active');
+  document.getElementById('ob-step-1').classList.add('active');
+  document.getElementById('ob-dot-2').classList.remove('active');
+  document.getElementById('ob-dot-1').classList.add('active');
+}
+
+async function saveOnboarding() {
+  var members = [];
+  var inputs = document.querySelectorAll('#ob-members-list input');
+  inputs.forEach(function(inp) {
+    var v = inp.value.trim();
+    if (v) members.push(v);
+  });
+  if (members.length === 0) { showToast('Adicione ao menos um nome.'); return; }
+  var btn = document.querySelector('#ob-step-2 .btn-submit');
+  btn.textContent = 'Salvando...'; btn.disabled = true;
+  try {
+    await _supabase.auth.updateUser({ data: { mode: _obMode, members: members, onboarding_done: true } });
+    _profile = { mode: _obMode, members: members };
+    document.getElementById('onboarding-screen').classList.remove('visible');
+    selectedWho = members[0];
+    renderWhoToggle();
+    fetchCategories();
+    fetchExpenses();
+    showToast('Tudo pronto!');
+  } catch(e) { showToast('Erro ao salvar. Tente novamente.'); }
+  btn.textContent = 'Começar →'; btn.disabled = false;
+}
+
+function renderWhoToggle() {
+  var container = document.getElementById('who-toggle');
+  if (!container) return;
+  container.innerHTML = _profile.members.map(function(name, i) {
+    var emoji = MEMBER_EMOJIS[i] || '👤';
+    return '<button class="who-btn'+(name===selectedWho?' active':'')+'" onclick="setWho(\''+name.replace(/'/g,"\\'")+'\')">'
+      +emoji+' '+name+'</button>';
+  }).join('');
 }
 
 // --- AUTH UI ---
@@ -379,11 +521,25 @@ function onSignedIn(session) {
   _session = session;
   document.getElementById('auth-screen').style.display = 'none';
   var user = session.user;
-  var name = (user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name : user.email;
+  var meta = user.user_metadata || {};
+  var name = meta.full_name || user.email;
   var initials = name.trim().split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
   document.getElementById('user-avatar').textContent = initials;
   document.getElementById('user-chip-label').textContent = name.split(' ')[0];
   document.getElementById('user-chip').style.display = 'flex';
+
+  if (!meta.onboarding_done) {
+    if (meta.full_name) {
+      var firstInput = document.querySelector('#ob-members-list input');
+      if (!firstInput) { obNextStep(); }
+    }
+    document.getElementById('onboarding-screen').classList.add('visible');
+    return;
+  }
+
+  _profile = { mode: meta.mode || 'casal', members: meta.members || ['Filipe', 'Beatriz'] };
+  selectedWho = _profile.members[0];
+  renderWhoToggle();
   fetchCategories();
   fetchExpenses();
 }
@@ -391,6 +547,7 @@ function onSignedIn(session) {
 function onSignedOut() {
   _session = null;
   document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('onboarding-screen').classList.remove('visible');
   document.getElementById('user-chip').style.display = 'none';
   categories = []; expenses = [];
   renderAll();
@@ -521,8 +678,7 @@ function showPage(id, btn) {
 }
 function setWho(who) {
   selectedWho = who;
-  document.getElementById('who-filipe').classList.toggle('active', who==='Filipe');
-  document.getElementById('who-beatriz').classList.toggle('active', who==='Beatriz');
+  renderWhoToggle();
 }
 function showToast(msg) {
   var t = document.getElementById('toast');
@@ -545,11 +701,13 @@ function renderDash() {
     ? 'Restam '+fmt(restante)+' do orçamento'
     : 'Orçamento estourado em '+fmt(Math.abs(restante));
 
+  var memberMetrics = _profile.members.slice(0,2).map(function(m){
+    return '<div class="metric"><div class="metric-label">'+m+'</div><div class="metric-value">'+fmt(totalByWho(m))+'</div></div>';
+  }).join('');
   document.getElementById('dash-metrics').innerHTML =
     '<div class="metric"><div class="metric-label">Orçamento total</div><div class="metric-value">'+fmt(totalLimit)+'</div></div>'+
     '<div class="metric"><div class="metric-label">Utilizado</div><div class="metric-value '+cls+'">'+pct+'%</div></div>'+
-    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(totalByWho('Filipe'))+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(totalByWho('Beatriz'))+'</div></div>';
+    memberMetrics;
 
   var alerts='';
   categories.forEach(function(c){
@@ -664,24 +822,26 @@ async function addExpense(){
 
 function renderReport(){
   var total=expenses.reduce(function(s,e){ return s+parseFloat(e.val); },0);
+  var repMemberMetrics = _profile.members.slice(0,2).map(function(m){
+    return '<div class="metric"><div class="metric-label">'+m+'</div><div class="metric-value">'+fmt(totalByWho(m))+'</div></div>';
+  }).join('');
   document.getElementById('rep-metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Total</div><div class="metric-value">'+fmt(total)+'</div></div>'+
     '<div class="metric"><div class="metric-label">Lançamentos</div><div class="metric-value good">'+expenses.length+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Filipe</div><div class="metric-value">'+fmt(totalByWho('Filipe'))+'</div></div>'+
-    '<div class="metric"><div class="metric-label">Beatriz</div><div class="metric-value">'+fmt(totalByWho('Beatriz'))+'</div></div>';
+    repMemberMetrics;
 
   var html='';
-  ['Filipe','Beatriz'].forEach(function(who){
+  _profile.members.forEach(function(who, idx){
     var whoTotal=totalByWho(who);
     if(whoTotal===0) return;
-    var initials=who==='Filipe'?'FP':'BP';
+    var initials=who.trim().split(' ').map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
     html+='<div class="rep-person-block"><div class="rep-person-name"><div class="rep-person-avatar">'+initials+'</div>'+who+'</div>';
     categories.forEach(function(c){
       var v=expenses.filter(function(e){ return e.cat===c.id&&e.who===who; }).reduce(function(s,e){ return s+parseFloat(e.val); },0);
       if(v!==0) html+='<div class="rep-row"><span class="rep-label">'+c.name+'</span><span class="rep-val">'+fmt(v)+'</span></div>';
     });
     html+='</div>';
-    if(who==='Filipe') html+='<div class="divider"></div>';
+    if(idx < _profile.members.length-1) html+='<div class="divider"></div>';
   });
   document.getElementById('rep-person').innerHTML=html||'<div class="empty">Sem dados em '+MONTHS[currentMonth]+'</div>';
 
